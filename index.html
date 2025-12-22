@@ -23,6 +23,26 @@
     #info { margin-top: 10px; font-size: 12px; color: #444; line-height: 1.35; }
     .hint { font-size: 11px; color: #666; margin-top: 6px; }
     kbd { background:#f3f3f3; border:1px solid #ddd; border-bottom-width:2px; padding:1px 6px; border-radius:6px; }
+
+    /* ✅ 툴팁 */
+    #tooltip{
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      pointer-events: none;
+      background: rgba(20,20,20,0.92);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 340px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+    }
+    #tooltip b{ font-size: 15px; }
+    #tooltip .small{ opacity: 0.85; font-size: 12px; margin-top: 6px; }
   </style>
 
   <script type="importmap">
@@ -50,9 +70,13 @@
       ✅ <kbd>Shift</kbd> + 클릭드래그: 방 조각 이동(퍼즐)<br/>
       ✅ 마우스 왼쪽: 회전 / 오른쪽: 이동 / 휠: 줌<br/>
       ✅ <kbd>G</kbd>: 정답 유령(자리) 표시/숨기기<br/>
-      ✅ 유령 가까이 놓으면 자동 스냅(잠금)
+      ✅ 유령 가까이 놓으면 자동 스냅(잠금)<br/>
+      ✅ 방에 마우스 올리면 면적/길이/벽면적 툴팁 표시
     </div>
   </div>
+
+  <!-- ✅ 툴팁 DOM -->
+  <div id="tooltip"></div>
 
   <script type="module">
     import * as THREE from 'three';
@@ -107,7 +131,7 @@
     // 퍼즐 오브젝트
     let pieces = [];        // 방 그룹
     let ghostPlanes = [];   // 정답 유령
-    let hitMeshes = [];     // 클릭 잡는 투명 메쉬(선택용)
+    let hitMeshes = [];     // 클릭/호버 잡는 투명 메쉬(선택용)
 
     // 드래그(직접 구현)
     const raycaster = new THREE.Raycaster();
@@ -117,6 +141,37 @@
     let draggedGroup = null;
     let dragOffset = new THREE.Vector3();
 
+    // ✅ 툴팁
+    const tooltip = document.getElementById('tooltip');
+    function fmt(n, digits=2){
+      if (!Number.isFinite(n)) return '-';
+      return n.toFixed(digits);
+    }
+    function hideTooltip(){
+      tooltip.style.display = 'none';
+    }
+    function showTooltip(e, group){
+      const m = group.userData.metrics;
+      if (!m) return;
+
+      tooltip.style.display = 'block';
+
+      // UI 패널(왼쪽 360px) 위로 툴팁이 겹치지 않도록 오른쪽에 기본 배치
+      const baseLeft = Math.max(e.clientX + 14, 380);
+      const baseTop  = e.clientY + 14;
+
+      tooltip.style.left = baseLeft + 'px';
+      tooltip.style.top  = baseTop + 'px';
+
+      tooltip.innerHTML = `
+        <b>${group.userData.name}</b><br/>
+        가로 ${fmt(m.width_m)} m × 세로 ${fmt(m.depth_m)} m × 높이 ${fmt(m.height_m)} m<br/>
+        바닥 ${fmt(m.floor_m2)} ㎡ / 천장 ${fmt(m.ceiling_m2)} ㎡<br/>
+        둘레 ${fmt(m.perimeter_m)} m / 벽면적 ${fmt(m.wall_m2)} ㎡
+        <div class="small">※ 이 값들은 에너지/물량 산출에 바로 쓰려고 room.metrics에 저장돼 있어요.</div>
+      `;
+    }
+
     function splitCols(line) {
       const t = (line || '').trim();
       if (!t) return null;
@@ -124,37 +179,44 @@
 
       if (t.includes('\t')) return t.split('\t').map(s => s.trim());
       if (t.includes(',')) return t.split(',').map(s => s.trim());
-      // 탭/콤마가 아닌 경우(혹시 공백으로 붙는 경우)
       return t.split(/\s+/).map(s => s.trim());
     }
 
+    // ✅ 라벨 크게 + 선명하게
     function makeLabelSprite(text) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      const pad = 16;
+      const pad = 24;
 
-      ctx.font = 'bold 22px Malgun Gothic';
+      ctx.font = 'bold 34px Malgun Gothic';
       const w = Math.ceil(ctx.measureText(text).width) + pad * 2;
-      const h = 46;
+      const h = 72;
       canvas.width = w; canvas.height = h;
 
-      ctx.fillStyle = 'rgba(255,255,255,0.90)';
+      // 선명도 향상
+      ctx.imageSmoothingEnabled = true;
+
+      ctx.fillStyle = 'rgba(255,255,255,0.93)';
       ctx.fillRect(0, 0, w, h);
+
       ctx.fillStyle = '#111';
       ctx.textBaseline = 'middle';
       ctx.fillText(text, pad, h / 2);
 
       const tex = new THREE.CanvasTexture(canvas);
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
       const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
       const sp = new THREE.Sprite(mat);
-      sp.scale.set(w / 140, h / 140, 1);
+
+      // 화면에서 크게 보이게
+      sp.scale.set(w / 80, h / 80, 1);
       return sp;
     }
 
     function clearAll() {
       pieces.forEach(g => scene.remove(g));
       ghostPlanes.forEach(g => scene.remove(g));
-      // hitMeshes는 그룹 안에 포함돼 같이 제거됨
 
       pieces = [];
       ghostPlanes = [];
@@ -162,6 +224,7 @@
 
       dragging = false;
       draggedGroup = null;
+      hideTooltip();
     }
 
     function makeRoomGroup({ id, name, w_m, d_m, wallH_m, color }) {
@@ -214,23 +277,39 @@
 
       // 라벨
       const label = makeLabelSprite(`${name} (${w_m}×${d_m})`);
-      label.position.set(0, H + 0.18, 0);
+      label.position.set(0, H + 0.35, 0);
       group.add(label);
 
-      // ✅ 선택용 “투명 히트박스” (이게 있어야 클릭이 확실히 잡혀!)
+      // ✅ 선택/호버용 “투명 히트박스”
+      // 살짝 더 크게 만들어서 잡기 편하게!
       const hitMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, side: THREE.DoubleSide });
-      const hit = new THREE.Mesh(new THREE.PlaneGeometry(w, d), hitMat);
+      const hit = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.02, d * 1.02), hitMat);
       hit.rotation.x = -Math.PI / 2;
       hit.position.y = 0.03;
       hit.userData.dragGroup = group;
       group.add(hit);
       hitMeshes.push(hit);
 
+      // ✅ 에너지/물량 산출용 수치 저장
+      const floorArea = w * d;
+      const ceilingArea = floorArea;
+      const perimeter = 2 * (w + d);
+      const wallArea = perimeter * H;
+
       group.userData = {
         id, name, w, d, H,
         locked: false,
         targetPos: new THREE.Vector3(0,0,0),
-        baseColor: color
+        baseColor: color,
+        metrics: {
+          width_m: w,
+          depth_m: d,
+          height_m: H,
+          floor_m2: floorArea,
+          ceiling_m2: ceilingArea,
+          perimeter_m: perimeter,
+          wall_m2: wallArea
+        }
       };
 
       return group;
@@ -276,7 +355,6 @@
 
     function lockPiece(group) {
       group.userData.locked = true;
-      // 잠긴 느낌(살짝 빛)
       group.traverse(obj => {
         if (obj.isMesh && obj.material && obj.material.emissive !== undefined) {
           obj.material.emissive = new THREE.Color(0x111111);
@@ -316,27 +394,43 @@
       const g = hit.userData.dragGroup;
       if (!g || g.userData.locked) return;
 
-      // 드래그 시작
       dragging = true;
       draggedGroup = g;
       controls.enabled = false;
+      hideTooltip();
 
       const p = new THREE.Vector3();
       raycaster.ray.intersectPlane(dragPlane, p);
       dragOffset.copy(p).sub(draggedGroup.position);
     });
 
+    // ✅ 드래그 & 호버 툴팁
     renderer.domElement.addEventListener('pointermove', (e) => {
-      if (!dragging || !draggedGroup) return;
+      // 드래그 중이면 이동만
+      if (dragging && draggedGroup) {
+        setMouseFromEvent(e);
+        raycaster.setFromCamera(mouse, camera);
 
+        const p = new THREE.Vector3();
+        raycaster.ray.intersectPlane(dragPlane, p);
+
+        draggedGroup.position.copy(p.sub(dragOffset));
+        draggedGroup.position.y = 0;
+        return;
+      }
+
+      // 드래그 중이 아니면: 호버 툴팁
       setMouseFromEvent(e);
       raycaster.setFromCamera(mouse, camera);
 
-      const p = new THREE.Vector3();
-      raycaster.ray.intersectPlane(dragPlane, p);
+      const hits = raycaster.intersectObjects(hitMeshes, true);
+      if (!hits.length) { hideTooltip(); return; }
 
-      draggedGroup.position.copy(p.sub(dragOffset));
-      draggedGroup.position.y = 0;
+      const hit = hits[0].object;
+      const g = hit.userData.dragGroup;
+      if (!g) { hideTooltip(); return; }
+
+      showTooltip(e, g);
     });
 
     renderer.domElement.addEventListener('pointerup', () => {
