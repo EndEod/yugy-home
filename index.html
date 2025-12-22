@@ -1,154 +1,394 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>YUGY.ORG - 도면 소생술 게임</title>
-    <style>
-        body { margin: 0; overflow: hidden; font-family: 'Malgun Gothic', sans-serif; }
-        #ui-container {
-            position: absolute; top: 10px; left: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px; border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        textarea { width: 100%; height: 100px; margin-bottom: 10px; }
-        button {
-            width: 100%; padding: 10px; background: #007bff; color: white;
-            border: none; border-radius: 4px; cursor: pointer; font-weight: bold;
-        }
-        button:hover { background: #0056b3; }
-        #info { margin-top: 10px; font-size: 12px; color: #555; }
-    </style>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YUGY.ORG - 도면 소생술 게임</title>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: 'Malgun Gothic', sans-serif; }
+    #ui-container {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 14px; border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      width: 340px;
+      z-index: 10;
+    }
+    textarea { width: 100%; height: 140px; margin: 8px 0 10px; font-size: 12px; }
+    button {
+      width: 100%; padding: 10px; background: #007bff; color: white;
+      border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
+    }
+    button:hover { background: #0056b3; }
+    #info { margin-top: 10px; font-size: 12px; color: #444; line-height: 1.35; }
+    .hint { font-size: 11px; color: #666; margin-top: 6px; }
+    kbd { background:#f3f3f3; border:1px solid #ddd; border-bottom-width:2px; padding:1px 6px; border-radius:6px; }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
+
 <body>
+  <div id="ui-container">
+    <h3>🏠 도면 소생술 시뮬레이터</h3>
+    <div class="hint">엑셀에서 표 범위(탭으로 복사되는 형태)를 그대로 붙여넣고 Build!</div>
 
-    <div id="ui-container">
-        <h3>🏠 도면 소생술 시뮬레이터</h3>
-        <p>엑셀 데이터를 아래에 붙여넣고 버튼을 누르세요.</p>
-        <textarea id="dataInput" placeholder="예: 벽, 200, 20, #FF5733"></textarea>
-        <button id="buildBtn">도면 생성하기 (Build)</button>
-        <div id="info">마우스 왼쪽: 회전 / 오른쪽: 이동 / 휠: 줌<br><b>Shift + 드래그: 물체 이동 (게임모드)</b></div>
+    <textarea id="dataInput" placeholder="예)
+1	현관	5.3	2.4	12.72	12.72	15.4	2.3	35.42
+2	방1	2.4	2.4	5.76	5.76	9.6	2.3	22.08"></textarea>
+
+    <button id="buildBtn">도면 생성하기 (Build)</button>
+
+    <div id="info">
+      ✅ <kbd>Shift</kbd> 누르고 드래그: 조각 이동(퍼즐 모드)<br/>
+      ✅ 마우스 왼쪽: 회전 / 오른쪽: 이동 / 휠: 줌<br/>
+      ✅ <kbd>G</kbd>: 정답 유령(자리) 표시/숨기기<br/>
+      ✅ 가까이 놓으면 자동 스냅(잠금)
     </div>
+  </div>
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { DragControls } from 'three/addons/controls/DragControls.js';
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { DragControls } from 'three/addons/controls/DragControls.js';
 
-        // 1. 기본 3D 무대 세팅
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf0f0f0); // 배경색 (밝은 회색)
+    // ====== 무대 세팅 ======
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf0f0f0);
 
-        // 카메라 설정
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 50, 50); // 위에서 아래로 내려다보는 뷰
-        camera.lookAt(0, 0, 0);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 5000);
+    camera.position.set(12, 12, 16);
+    camera.lookAt(0, 0, 0);
 
-        // 렌더러 설정
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        document.body.appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    document.body.appendChild(renderer.domElement);
 
-        // 조명 설정
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(50, 80, 50);
-        dirLight.castShadow = true;
-        scene.add(dirLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+    scene.add(ambientLight);
 
-        // 바닥 그리드 (건축사 눈금)
-        const gridHelper = new THREE.GridHelper(100, 100);
-        scene.add(gridHelper);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.85);
+    dirLight.position.set(50, 80, 50);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
 
-        // 마우스 컨트롤 (화면 돌리기)
-        const controls = new OrbitControls(camera, renderer.domElement);
-        
-        // 물체들이 담길 리스트
-        let objects = [];
-        let dragControls;
+    const gridHelper = new THREE.GridHelper(120, 120);
+    scene.add(gridHelper);
 
-        // 2. 엑셀 데이터 해석 및 생성 함수
-        function buildFromData() {
-            // 기존 물체 삭제
-            objects.forEach(obj => scene.remove(obj));
-            objects = [];
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
 
-            const input = document.getElementById('dataInput').value;
-            const lines = input.split('\n'); // 엔터키로 줄 나누기
+    // ====== 퍼즐 설정 ======
+    const WALL_THICKNESS_M = 0.12;  // 120mm
+    const SNAP_DIST = 0.35;         // 스냅 허용 거리(미터 단위 느낌)
+    const TARGET_ROW_LIMIT = 22;    // 정답 레이아웃 한 줄 폭
+    const GAP = 0.35;              // 조각 간격
 
-            lines.forEach(line => {
-                // 데이터 포맷: 종류, 가로, 세로(높이), 색상
-                // 예: 벽, 10, 5, #FF0000
-                let parts = line.split(',');
-                if(parts.length < 2) return;
+    let shiftDown = false;
+    window.addEventListener('keydown', (e) => { if (e.key === 'Shift') shiftDown = true; });
+    window.addEventListener('keyup', (e) => { if (e.key === 'Shift') shiftDown = false; });
 
-                let type = parts[0].trim();
-                let width = parseFloat(parts[1]);
-                let height = parseFloat(parts[2]); // 벽이면 높이, 바닥이면 깊이
-                let color = parts[3] ? parts[3].trim() : '#cccccc';
+    let ghostsVisible = true;
+    let pieces = [];   // 움직이는 조각(방 그룹)
+    let ghosts = [];   // 정답 자리(유령)
+    let dragControls = null;
 
-                let geometry, material, mesh;
+    // ====== 유틸: 탭/콤마 분리 ======
+    function splitCols(line) {
+      const t = (line || '').trim();
+      if (!t) return null;
+      if (t.includes('공간ID') || t.includes('공간명')) return null;
+      const cols = t.includes('\t') ? t.split('\t') : t.split(',');
+      return cols.map(c => (c || '').trim());
+    }
 
-                if (type === '벽') {
-                    // 벽은 위로 솟아오름 (BoxGeometry)
-                    geometry = new THREE.BoxGeometry(width, 10, 2); // 높이는 10으로 고정, 두께 2
-                    material = new THREE.MeshStandardMaterial({ color: color });
-                    mesh = new THREE.Mesh(geometry, material);
-                    mesh.position.y = 5; // 바닥 위에 올라오게
-                } else if (type === '바닥') {
-                    // 바닥은 평평함 (PlaneGeometry)
-                    geometry = new THREE.PlaneGeometry(width, height);
-                    material = new THREE.MeshStandardMaterial({ color: color, side: THREE.DoubleSide });
-                    mesh = new THREE.Mesh(geometry, material);
-                    mesh.rotation.x = -Math.PI / 2; // 눕히기
-                    mesh.position.y = 0.1; // 그리드보다 살짝 위에
-                }
+    function colorFromName(name) {
+      let h = 0;
+      for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+      const hex = (h & 0xFFFFFF).toString(16).padStart(6, '0');
+      return `#${hex}`;
+    }
 
-                if (mesh) {
-                    mesh.castShadow = true;
-                    mesh.receiveShadow = true;
-                    scene.add(mesh);
-                    objects.push(mesh);
-                }
-            });
+    function makeLabelSprite(text) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const pad = 18;
+      ctx.font = 'bold 22px Malgun Gothic';
+      const w = Math.ceil(ctx.measureText(text).width) + pad * 2;
+      const h = 48;
+      canvas.width = w; canvas.height = h;
 
-            // 드래그 기능 다시 연결
-            if(dragControls) dragControls.dispose();
-            dragControls = new DragControls(objects, camera, renderer.domElement);
-            
-            // 드래그할 때 화면 회전 멈추기 (충돌 방지)
-            dragControls.addEventListener('dragstart', function () { controls.enabled = false; });
-            dragControls.addEventListener('dragend', function () { controls.enabled = true; });
+      ctx.fillStyle = 'rgba(255,255,255,0.90)';
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#111';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, pad, h / 2);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+      const sp = new THREE.Sprite(mat);
+      sp.scale.set(w / 140, h / 140, 1);
+      return sp;
+    }
+
+    function clearAll() {
+      pieces.forEach(p => scene.remove(p));
+      ghosts.forEach(g => scene.remove(g));
+      pieces = [];
+      ghosts = [];
+      if (dragControls) { dragControls.dispose(); dragControls = null; }
+    }
+
+    // 방 그룹: 바닥+천장+벽4
+    function makeRoomGroup({ id, name, w_m, d_m, wallH_m }) {
+      const group = new THREE.Group();
+
+      const w = w_m;           // world = m
+      const d = d_m;
+      const H = wallH_m || 2.3;
+      const T = WALL_THICKNESS_M;
+
+      const col = new THREE.Color(colorFromName(name));
+
+      // 바닥
+      const floorGeo = new THREE.PlaneGeometry(w, d);
+      const floorMat = new THREE.MeshStandardMaterial({ color: col, side: THREE.DoubleSide });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = 0.01;
+      floor.receiveShadow = true;
+      group.add(floor);
+
+      // 천장(반투명)
+      const ceilMat = new THREE.MeshStandardMaterial({ color: col, side: THREE.DoubleSide, transparent: true, opacity: 0.25 });
+      const ceiling = new THREE.Mesh(floorGeo.clone(), ceilMat);
+      ceiling.rotation.x = -Math.PI / 2;
+      ceiling.position.y = H;
+      group.add(ceiling);
+
+      // 벽 4개(서 있는 벽)
+      const wallMat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.65 });
+
+      // 가로벽 2개
+      const wallWGeo = new THREE.BoxGeometry(w, H, T);
+      const w1 = new THREE.Mesh(wallWGeo, wallMat);
+      w1.position.set(0, H/2, -d/2);
+      w1.castShadow = true; w1.receiveShadow = true;
+      group.add(w1);
+
+      const w2 = w1.clone();
+      w2.position.set(0, H/2, d/2);
+      group.add(w2);
+
+      // 세로벽 2개
+      const wallDGeo = new THREE.BoxGeometry(d, H, T);
+      const w3 = new THREE.Mesh(wallDGeo, wallMat);
+      w3.rotation.y = Math.PI / 2;
+      w3.position.set(-w/2, H/2, 0);
+      w3.castShadow = true; w3.receiveShadow = true;
+      group.add(w3);
+
+      const w4 = w3.clone();
+      w4.position.set(w/2, H/2, 0);
+      group.add(w4);
+
+      // 라벨
+      const label = makeLabelSprite(`${name} (${w_m}×${d_m})`);
+      label.position.set(0, H + 0.18, 0);
+      group.add(label);
+
+      group.userData = {
+        id, name,
+        w, d, H,
+        locked: false,
+        targetPos: new THREE.Vector3(0, 0, 0)
+      };
+
+      return group;
+    }
+
+    function makeGhost(roomGroup) {
+      const { w, d } = roomGroup.userData;
+      const geo = new THREE.PlaneGeometry(w, d);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.10, side: THREE.DoubleSide });
+      const g = new THREE.Mesh(geo, mat);
+      g.rotation.x = -Math.PI / 2;
+      g.position.y = 0.005;
+      return g;
+    }
+
+    // 정답 자리 자동 배치(행/열)
+    function layoutTargets(groups) {
+      let x = 0, z = 0;
+      let rowDepth = 0;
+
+      for (const g of groups) {
+        const w = g.userData.w;
+        const d = g.userData.d;
+
+        if (x + w > TARGET_ROW_LIMIT) {
+          x = 0;
+          z += rowDepth + GAP;
+          rowDepth = 0;
         }
+        const tx = x + w / 2;
+        const tz = z + d / 2;
+        g.userData.targetPos.set(tx, 0, tz);
 
-        // 버튼 클릭 이벤트 연결
-        document.getElementById('buildBtn').addEventListener('click', buildFromData);
+        x += w + GAP;
+        rowDepth = Math.max(rowDepth, d);
+      }
+    }
 
-        // 3. 애니메이션 루프 (계속 그리기)
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
+    function scatterPieces(groups) {
+      // 조각은 정답에서 살짝 떨어진 곳에 랜덤 배치
+      for (const g of groups) {
+        const t = g.userData.targetPos;
+        g.position.set(
+          t.x + (Math.random() - 0.5) * 10,
+          0,
+          t.z + 5 + (Math.random() - 0.5) * 10
+        );
+      }
+    }
+
+    function lockPiece(g) {
+      g.userData.locked = true;
+      // 잠긴 느낌: 살짝 밝게
+      g.traverse(obj => {
+        if (obj.isMesh && obj.material) {
+          obj.material.emissive = new THREE.Color(0x111111);
+          obj.material.emissiveIntensity = 0.6;
         }
-        animate();
+      });
+    }
 
-        // 창 크기 조절 대응
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+    function trySnap(g) {
+      const t = g.userData.targetPos;
+      const dist = g.position.distanceTo(t);
+      if (dist < SNAP_DIST) {
+        g.position.copy(t);
+        lockPiece(g);
+        return true;
+      }
+      return false;
+    }
 
-    </script>
+    function refreshDragControls() {
+      if (dragControls) { dragControls.dispose(); dragControls = null; }
+      const unlocked = pieces.filter(p => !p.userData.locked);
+      dragControls = new DragControls(unlocked, camera, renderer.domElement);
+      dragControls.transformGroup = true;
+      dragControls.enabled = false;
+
+      dragControls.addEventListener('dragstart', () => { controls.enabled = false; });
+      dragControls.addEventListener('drag', (e) => { e.object.position.y = 0; });
+      dragControls.addEventListener('dragend', (e) => {
+        controls.enabled = true;
+        e.object.position.y = 0;
+        if (!e.object.userData.locked) {
+          const snapped = trySnap(e.object);
+          if (snapped) refreshDragControls();
+        }
+      });
+    }
+
+    // Shift 눌렀을 때만 드래그 활성화
+    window.addEventListener('pointerdown', () => { if (dragControls) dragControls.enabled = shiftDown; });
+    window.addEventListener('pointerup', () => { if (dragControls) dragControls.enabled = false; });
+
+    // G키: 유령 토글
+    window.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'g') {
+        ghostsVisible = !ghostsVisible;
+        ghosts.forEach(g => g.visible = ghostsVisible);
+      }
+    });
+
+    // ✅ 핵심: 탭 데이터(9열) 붙여넣기 -> 방 조각 생성 -> 정답 유령 깔기 -> 퍼즐 모드
+    function buildFromData() {
+      clearAll();
+
+      const input = document.getElementById('dataInput').value || '';
+      const lines = input.split(/\r?\n/);
+
+      const groups = [];
+
+      for (const line of lines) {
+        const cols = splitCols(line);
+        if (!cols) continue;
+
+        // 형식: [0]공간ID [1]공간명 [2]가로(m) [3]세로(m) ... [7]벽높이(m)
+        if (cols.length >= 8 && !isNaN(Number(cols[0])) && cols[1]) {
+          const id = cols[0];
+          const name = cols[1];
+          const w_m = parseFloat(cols[2]);
+          const d_m = parseFloat(cols[3]);
+          const wallH_m = parseFloat(cols[7]) || 2.3;
+
+          if ([w_m, d_m].every(Number.isFinite)) {
+            groups.push(makeRoomGroup({ id, name, w_m, d_m, wallH_m }));
+          }
+        }
+      }
+
+      if (groups.length === 0) {
+        alert('붙여넣은 데이터에서 방 정보를 찾지 못했어요. (탭 구분 / 9열 형식인지 확인)');
+        return;
+      }
+
+      // 정답 자리 배치
+      layoutTargets(groups);
+
+      // 유령 깔기
+      for (const g of groups) {
+        const ghost = makeGhost(g);
+        ghost.position.x = g.userData.targetPos.x;
+        ghost.position.z = g.userData.targetPos.z;
+        ghost.visible = ghostsVisible;
+        scene.add(ghost);
+        ghosts.push(ghost);
+      }
+
+      // 조각 추가 + 섞기
+      for (const g of groups) {
+        scene.add(g);
+        pieces.push(g);
+      }
+      scatterPieces(pieces);
+
+      // 드래그 세팅
+      refreshDragControls();
+
+      // 카메라가 전체가 보이도록 target 근처로
+      controls.target.set(TARGET_ROW_LIMIT / 2, 0, 3);
+      controls.update();
+    }
+
+    document.getElementById('buildBtn').addEventListener('click', buildFromData);
+
+    // 렌더 루프
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // 창 크기 대응
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
