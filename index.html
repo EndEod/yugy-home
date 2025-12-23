@@ -161,4 +161,52 @@
 
         <section>
             <h2>특허보유현황</h2>
-            <p>메타버스+BIM+전시장 활용, 메타버스
+            <p>메타버스+BIM+전시장 활용, 메타버스+BIM+그린리모델링 활용</p>
+            <img src="img/011.png" alt="특허증 및 인증서 모음">
+        </section>
+
+        <section>
+            <h2>AR 체험하기</h2>
+            <p>스마트폰 카메라로 QR코드를 스캔하여 미래 건설을 체험해보세요.</p>
+            <img src="img/003.png" alt="AR QR코드 모음">
+        </section>
+
+        <section>
+            <h2>(주)여기건축사사무소</h2>
+            <img src="img/012.png" alt="여기건축사사무소 연락처">
+            
+            <div class="contact-info">
+                <p>
+                    서울시 서대문구 서소문로 37, 1521호<br>
+                    T. 02-313-4581 &nbsp;|&nbsp; F. 02-313-4582<br>
+                    <strong>grenarch@naver.com</strong><br>
+                    그린리모델링 사업부 대표 : 김 기 언
+                </p>
+            </div>
+
+            <a href="mailto:grenarch@naver.com" class="btn">프로젝트 문의하기</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>(주)여기건축사사무소 | 그린리모델링 사업부 대표 : 김 기 언</p>
+        <p>Copyright © 2025 Yeogi Architects. All rights reserved.</p>
+        <p><a href="https://yugy.org">https://yugy.org</a></p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
