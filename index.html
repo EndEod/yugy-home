@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-            background-color: #fdfcf5; /* 이미지 배경색과 맞춤 */
+            background-color: #fdfcf5;
             color: #4a4a4a;
             line-height: 1.6;
         }
@@ -42,7 +42,7 @@
         section {
             margin-bottom: 60px;
             text-align: center;
-            opacity: 0; /* 애니메이션 효과를 위해 숨김 */
+            opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s ease-out;
         }
@@ -64,7 +64,7 @@
         h2 {
             font-size: 2rem;
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 20px; /* 간격 조금 늘림 */
         }
         p {
             font-size: 1.1rem;
@@ -72,20 +72,8 @@
             word-break: keep-all;
         }
         .highlight {
-            color: #27ae60; /* 그린리모델링 색상 */
+            color: #27ae60;
             font-weight: bold;
-        }
-
-        /* === QR 코드 섹션 === */
-        .qr-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .qr-item img {
-            box-shadow: none;
-            border: 2px solid #ddd;
         }
 
         /* === 하단 푸터 === */
@@ -126,55 +114,64 @@
 
     <div class="container">
         <section class="visible">
-            <img src="001.png" alt="BIM 메타버스 스마트 그린리모델링">
+            <img src="img/001.png" alt="BIM 메타버스 스마트 그린리모델링">
             <h2>미래 건설의 새로운 패러다임</h2>
             <p>BIM과 메타버스를 결합하여 건축의 새로운 미래를 엽니다.</p>
         </section>
 
         <section>
-            <img src="002.png" alt="서비스 목록">
+            <img src="img/002.png" alt="서비스 목록">
             <p>스마트 건설부터 사용자 맞춤형 디자인 서비스까지,<br>
             <span class="highlight">당신의 성공적인 프로젝트를 위한 파트너</span>가 되겠습니다.</p>
         </section>
 
         <section>
             <h2>스마트 그린리모델링 솔루션</h2>
-            <img src="004.png" alt="BIM 기술">
+            <img src="img/004.png" alt="BIM 기술">
             <p>데이터 기반의 미래형 건설 관리 시스템</p>
             
-            <img src="005.png" alt="메타버스 체험">
+            <img src="img/005.png" alt="메타버스 체험">
             <p>프로젝트 기획단계 부터 'BIM+메타버스'로 건축을 쉽게 체험하세요.</p>
             
-            <img src="006.png" alt="탄소 중립">
+            <img src="img/006.png" alt="탄소 중립">
             <p>탄소 중립을 위한 최적의 건축 솔루션을 제공합니다.</p>
         </section>
 
         <section>
-            <img src="009.png" alt="그린리모델링 시범사업">
+            <img src="img/009.png" alt="그린리모델링 시범사업">
             <p style="text-align: left; background: #fff; padding: 20px; border-radius: 8px;">
                 에너지 개선 사업이 시급한 리모델링 활성화 지구를 가상공간에 구현하여 
                 BIM 정보를 활용, 건물의 에너지 사용량을 분석합니다. <br><br>
                 결과를 사전에 시각화하여 위험요소를 제거하고 비용과 지연을 최소화합니다.
                 메타버스를 이용한 주민설명회는 더 직관적인 소통을 가능하게 합니다.
             </p>
-            <img src="010.png" alt="건물 예시">
+            <img src="img/010.png" alt="건물 예시">
+        </section>
+
+        <section>
+            <h2>신뢰할 수 있는 기술력</h2>
+            <p>특허받은 메타버스+BIM 기술과 그린리모델링 전문성을 보유하고 있습니다.</p>
+            <img src="img/011.png" alt="특허 및 인증 현황">
         </section>
 
         <section>
             <h2>AR 체험하기</h2>
             <p>스마트폰 카메라로 QR코드를 스캔하여 미래 건설을 체험해보세요.</p>
-            <img src="003.png" alt="AR QR코드 모음">
+            <img src="img/003.png" alt="AR QR코드 모음">
         </section>
 
         <section>
-            <h2>함께 고민하겠습니다</h2>
+            <h2>Contact Us</h2>
             <p>여러분의 소중한 공간, 뚱뚜루와 (주)여기건축사사무소가 함께합니다.</p>
-            <a href="mailto:contact@yugy.org" class="btn">프로젝트 문의하기</a>
+            <img src="img/012.png" alt="(주)여기건축사사무소 연락처 및 정보">
+            
+            <br>
+            <a href="mailto:grenarch@naver.com" class="btn">이메일 문의하기</a>
         </section>
     </div>
 
     <footer>
-        <p>(주)여기건축사사무소 | 대표: 뚱뚜루</p>
+        <p>(주)여기건축사사무소 | 대표: 뚱뚜루 (김기언)</p>
         <p>Copyright © 2025 Yeogi Architects. All rights reserved.</p>
         <p><a href="https://yugy.org">https://yugy.org</a></p>
     </footer>
