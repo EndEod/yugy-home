@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(주)여기건축사사무소 - BIM & Metaverse</title>
     <style>
-        /* === 기본 스타일 설정 === */
+        /* === 기본 스타일 === */
         body {
             margin: 0;
             padding: 0;
@@ -15,7 +15,7 @@
             line-height: 1.6;
         }
         
-        /* === 상단 네비게이션 === */
+        /* === 헤더 === */
         header {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
@@ -31,14 +31,13 @@
             color: #333;
         }
 
-        /* === 메인 컨텐츠 영역 === */
+        /* === 레이아웃 === */
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* === 섹션 공통 스타일 === */
         section {
             margin-bottom: 60px;
             text-align: center;
@@ -51,7 +50,7 @@
             transform: translateY(0);
         }
 
-        /* === 이미지 스타일 === */
+        /* === 이미지 & 텍스트 === */
         img {
             max-width: 100%;
             height: auto;
@@ -60,11 +59,11 @@
             margin-bottom: 20px;
         }
 
-        /* === 텍스트 강조 === */
         h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #2c3e50;
-            margin-bottom: 20px; /* 간격 조금 늘림 */
+            margin-bottom: 15px;
+            word-break: keep-all;
         }
         p {
             font-size: 1.1rem;
@@ -76,7 +75,15 @@
             font-weight: bold;
         }
 
-        /* === 하단 푸터 === */
+        /* === 주소 및 연락처 텍스트 스타일 === */
+        .contact-info {
+            font-size: 1rem;
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 30px;
+        }
+
+        /* === 푸터 & 버튼 === */
         footer {
             background-color: #333;
             color: #fff;
@@ -89,7 +96,6 @@
             text-decoration: none;
         }
 
-        /* === 버튼 스타일 === */
         .btn {
             display: inline-block;
             padding: 15px 30px;
@@ -139,19 +145,24 @@
 
         <section>
             <img src="img/009.png" alt="그린리모델링 시범사업">
-            <p style="text-align: left; background: #fff; padding: 20px; border-radius: 8px;">
-                에너지 개선 사업이 시급한 리모델링 활성화 지구를 가상공간에 구현하여 
-                BIM 정보를 활용, 건물의 에너지 사용량을 분석합니다. <br><br>
-                결과를 사전에 시각화하여 위험요소를 제거하고 비용과 지연을 최소화합니다.
-                메타버스를 이용한 주민설명회는 더 직관적인 소통을 가능하게 합니다.
-            </p>
+            <div style="text-align: left; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <p style="margin-bottom: 15px;">
+                    에너지 개선 사업이 시급한 리모델링 활성화 지구를 가상공간에 구현하여 
+                    BIM 정보를 활용, 건물의 에너지 사용량을 분석합니다.
+                </p>
+                <p style="margin-bottom: 0;">
+                    결과를 사전에 시각화하여 위험요소를 제거하고 비용과 지연을 최소화합니다.
+                    메타버스를 이용한 주민설명회는 더 직관적인 소통을 가능하게 합니다.
+                </p>
+            </div>
+            <br>
             <img src="img/010.png" alt="건물 예시">
         </section>
 
         <section>
-            <h2>신뢰할 수 있는 기술력</h2>
-            <p>특허받은 메타버스+BIM 기술과 그린리모델링 전문성을 보유하고 있습니다.</p>
-            <img src="img/011.png" alt="특허 및 인증 현황">
+            <h2>특허보유현황</h2>
+            <p>메타버스+BIM+전시장 활용<br>메타버스+BIM+그린리모델링 활용</p>
+            <img src="img/011.png" alt="특허증 및 인증서 모음">
         </section>
 
         <section>
@@ -161,23 +172,29 @@
         </section>
 
         <section>
-            <h2>Contact Us</h2>
-            <p>여러분의 소중한 공간, 뚱뚜루와 (주)여기건축사사무소가 함께합니다.</p>
-            <img src="img/012.png" alt="(주)여기건축사사무소 연락처 및 정보">
+            <h2>(주)여기건축사사무소</h2>
+            <img src="img/012.png" alt="여기건축사사무소 연락처">
             
-            <br>
-            <a href="mailto:grenarch@naver.com" class="btn">이메일 문의하기</a>
+            <div class="contact-info">
+                <p>
+                    서울시 서대문구 서소문로 37, 1521호<br>
+                    T. 02-313-4581 &nbsp;|&nbsp; F. 02-313-4582<br>
+                    <strong>grenarch@naver.com</strong><br>
+                    그린리모델링 사업부 대표 : 김 기 언
+                </p>
+            </div>
+
+            <a href="mailto:grenarch@naver.com" class="btn">프로젝트 문의하기</a>
         </section>
     </div>
 
     <footer>
-        <p>(주)여기건축사사무소 | 대표: 뚱뚜루 (김기언)</p>
+        <p>(주)여기건축사사무소 | 대표: 김기언</p>
         <p>Copyright © 2025 Yeogi Architects. All rights reserved.</p>
         <p><a href="https://yugy.org">https://yugy.org</a></p>
     </footer>
 
     <script>
-        // 스크롤 시 부드럽게 나타나는 효과
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
