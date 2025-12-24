@@ -18,12 +18,12 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* 스크롤 없앰 */
+            overflow: hidden; 
             font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
             background-color: var(--bg-color);
         }
 
-        /* === 상단 헤더 & 책갈피 탭 === */
+        /* === 상단 헤더 === */
         header {
             position: fixed;
             top: 0;
@@ -46,7 +46,6 @@
             color: var(--primary-color);
         }
 
-        /* 책갈피 네비게이션 */
         .tabs {
             display: flex;
             gap: 5px;
@@ -64,19 +63,14 @@
             transition: all 0.3s;
         }
 
-        .tab-btn:hover {
+        .tab-btn:hover, .tab-btn.active {
             color: var(--primary-color);
         }
 
-        .tab-btn.active {
-            color: var(--primary-color);
-        }
-
-        /* 활성화된 탭 밑줄 효과 */
         .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -23px; /* 헤더 높이 고려 */
+            bottom: -23px;
             left: 0;
             width: 100%;
             height: 4px;
@@ -85,13 +79,13 @@
 
         /* === 슬라이더 컨테이너 === */
         .slider-container {
-            width: 300vw; /* 섹션 3개라 300% */
+            width: 300vw;
             height: 100vh;
             display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* 부드러운 이동 */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* === 개별 섹션 스타일 === */
+        /* === 개별 섹션 === */
         .section {
             width: 100vw;
             height: 100vh;
@@ -102,6 +96,7 @@
             position: relative;
             box-sizing: border-box;
             padding-top: 60px; /* 헤더 공간 */
+            padding-bottom: 50px; /* 푸터 공간 확보 */
         }
 
         /* 비디오 영역 */
@@ -116,11 +111,7 @@
             margin-bottom: 20px;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        iframe { width: 100%; height: 100%; border: none; }
 
         /* 텍스트 및 버튼 */
         .content {
@@ -159,6 +150,45 @@
             background-color: var(--accent-color);
         }
 
+        /* === 하단 고정 푸터 (링크 모음) === */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.95); /* 어두운 남색 배경 */
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center; /* 중앙 정렬 */
+            align-items: center;
+            z-index: 1000;
+            box-sizing: border-box;
+            backdrop-filter: blur(5px);
+            font-size: 0.9rem;
+            flex-wrap: wrap; /* 모바일에서 줄바꿈 */
+            gap: 20px;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .divider {
+            color: #555;
+            user-select: none;
+        }
+
         /* === 좌우 화살표 === */
         .nav-arrow {
             position: fixed;
@@ -188,18 +218,12 @@
         .prev { left: 20px; }
         .next { right: 20px; }
 
-        /* 첫 페이지에선 왼쪽 화살표 숨김, 마지막엔 오른쪽 숨김 */
-        .prev.hidden, .next.hidden {
-            display: none;
-        }
+        .prev.hidden, .next.hidden { display: none; }
 
-        /* 모바일 반응형 */
         @media (max-width: 768px) {
             h2 { font-size: 1.8rem; }
             .tab-btn { padding: 10px; font-size: 0.9rem; }
-            .nav-arrow { width: 40px; height: 40px; font-size: 1.2rem; bottom: 20px; top: auto; transform: none; }
-            .prev { left: 20px; bottom: 30px; }
-            .next { right: 20px; bottom: 30px; }
+            footer { font-size: 0.8rem; padding: 10px; }
         }
     </style>
 </head>
@@ -215,44 +239,52 @@
     </header>
 
     <div class="slider-container" id="slider">
-
         <div class="section">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ?rel=0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0" allowfullscreen></iframe>
             </div>
             <div class="content">
                 <h2>METAVERSE ARCHITECTURE</h2>
-                <p>가상 공간에서 미리 짓고, 체험하세요.<br>실패 없는 건축을 위한 뚱뚜루만의 프리미엄 솔루션.</p>
-                <a href="#" class="cta-btn">메타버스 솔루션 보기</a>
+                <p>가상 공간에서 미리 짓고, 체험하세요.</p>
+                <a href="https://yugy.cloud" class="cta-btn" target="_blank">온라인 모델하우스 입장 (yugy.cloud)</a>
             </div>
         </div>
 
         <div class="section">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j?rel=0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0" allowfullscreen></iframe>
             </div>
             <div class="content">
                 <h2>GREEN REMODELING</h2>
-                <p>"수억 원 드는 공사, 감으로 하시겠습니까?"<br>건축사가 직접 진단하는 건물 심폐소생 프로젝트.</p>
-                <a href="https://smartstore.naver.com/kiendeod_susutto/products/12728705402" target="_blank" class="cta-btn" style="background-color: #03C75A;">비용 확인 및 진단 신청</a>
+                <p>건축사가 직접 진단하는 건물 심폐소생 프로젝트.</p>
+                <a href="https://smartstore.naver.com/kiendeod_susutto" target="_blank" class="cta-btn" style="background-color: #03C75A;">비용 확인 및 진단 신청</a>
             </div>
         </div>
 
         <div class="section">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le?rel=0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0" allowfullscreen></iframe>
             </div>
             <div class="content">
                 <h2>BIM ENGINEERING</h2>
-                <p>데이터로 짓는 정밀 시공.<br>오차 없는 설계와 효율적인 유지관리를 약속합니다.</p>
+                <p>데이터로 짓는 정밀 시공.<br>오차 없는 설계를 약속합니다.</p>
                 <a href="#" class="cta-btn">BIM 포트폴리오 보기</a>
             </div>
         </div>
-
     </div>
 
     <div class="nav-arrow prev hidden" onclick="moveSlide(-1)">&#10094;</div>
     <div class="nav-arrow next" onclick="moveSlide(1)">&#10095;</div>
+
+    <footer>
+        <a href="https://yugy.cloud" target="_blank" class="footer-link">☁️ yugy.cloud</a>
+        <span class="divider">|</span>
+        <a href="https://yugy.site" target="_blank" class="footer-link">🚑 뚱뚜루 도면소생술</a>
+        <span class="divider">|</span>
+        <a href="https://yugy.store" target="_blank" class="footer-link">🛍️ yugy.store</a>
+        <span class="divider">|</span>
+        <a href="https://smartstore.naver.com/kiendeod_susutto" target="_blank" class="footer-link" style="color:#03C75A; font-weight:bold;">N 스마트스토어</a>
+    </footer>
 
     <script>
         let currentSlide = 0;
@@ -263,19 +295,13 @@
         const nextBtn = document.querySelector('.next');
 
         function updateUI() {
-            // 1. 슬라이더 이동
             slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
-
-            // 2. 탭 활성화 상태 변경
             tabBtns.forEach((btn, index) => {
                 if(index === currentSlide) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
-
-            // 3. 화살표 표시/숨김 처리
             if(currentSlide === 0) prevBtn.classList.add('hidden');
             else prevBtn.classList.remove('hidden');
-
             if(currentSlide === totalSlides - 1) nextBtn.classList.add('hidden');
             else nextBtn.classList.remove('hidden');
         }
@@ -295,4 +321,3 @@
 
 </body>
 </html>
-
