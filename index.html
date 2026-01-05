@@ -1,333 +1,391 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(주)여기건축사사무소 - Metaverse & Green Remodeling</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>(주)여기건축사사무소 - Metaverse & Green Remodeling</title>
 
-    <!-- ✅ Google tag (gtag.js) - yugy.org / GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXEF0EWWVB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TXEF0EWWVB');
-    </script>
+  <!-- ✅ Google tag (gtag.js) - yugy.org / GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXEF0EWWVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-TXEF0EWWVB', {
+      send_page_view: true
+    });
 
-    <style>
-        /* === 기본 설정 === */
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #27ae60;
-            --bg-color: #fdfcf5;
-            --text-color: #333;
-        }
+    // ✅ (옵션) 외부 링크 클릭 추적
+    // - GA4에서 이벤트: outbound_click 로 확인 가능
+    // - 이벤트 파라미터: link_url, link_text, link_domain, link_is_external
+    function trackOutboundClick(a){
+      try{
+        const url = a.href || '';
+        const text = (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 120);
+        const isExternal = a.host && (a.host !== location.host);
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
-            background-color: var(--bg-color);
-        }
+        gtag('event', 'outbound_click', {
+          link_url: url,
+          link_text: text,
+          link_domain: a.host || '',
+          link_is_external: !!isExternal
+        });
+      }catch(e){}
+    }
 
-        /* === 상단 헤더 === */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            box-sizing: border-box;
-        }
+    document.addEventListener('click', function(e){
+      const a = e.target.closest && e.target.closest('a');
+      if(!a) return;
 
-        .logo {
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
+      // 새 창 열기(_blank) 링크도 추적하고 끝냄
+      trackOutboundClick(a);
+    }, true);
+  </script>
 
-        .tabs {
-            display: flex;
-            gap: 5px;
-        }
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --accent-color: #27ae60;
+      --bg-color: #fdfcf5;
+      --text-color: #333;
+    }
 
-        .tab-btn {
-            padding: 10px 20px;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #aaa;
-            position: relative;
-            transition: all 0.3s;
-        }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+    }
 
-        .tab-btn:hover, .tab-btn.active {
-            color: var(--primary-color);
-        }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
 
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -23px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--accent-color);
-        }
+    .logo {
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      white-space: nowrap;
+    }
 
-        /* === 슬라이더 컨테이너 === */
-        .slider-container {
-            width: 300vw;
-            height: 100vh;
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+    .tabs {
+      display: flex;
+      gap: 5px;
+    }
 
-        /* === 개별 섹션 === */
-        .section {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            box-sizing: border-box;
-            padding-top: 60px; /* 헤더 공간 */
-            padding-bottom: 50px; /* 푸터 공간 확보 */
-        }
+    .tab-btn {
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #aaa;
+      position: relative;
+      transition: all 0.3s;
+    }
 
-        /* 비디오 영역 */
-        .video-wrapper {
-            width: 90%;
-            max-width: 900px;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
+    .tab-btn:hover, .tab-btn.active {
+      color: var(--primary-color);
+    }
 
-        iframe { width: 100%; height: 100%; border: none; }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -23px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--accent-color);
+    }
 
-        /* 텍스트 및 버튼 */
-        .content {
-            text-align: center;
-            padding: 0 20px;
-            max-width: 800px;
-        }
+    .slider-container {
+      width: 300vw;
+      height: 100vh;
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
 
-        h2 {
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            color: var(--primary-color);
-        }
+    .section {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-sizing: border-box;
+      padding-top: 60px;
+      padding-bottom: 50px;
+    }
 
-        p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
+    .video-wrapper {
+      width: 90%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
 
-        .cta-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: transform 0.2s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+    iframe { width: 100%; height: 100%; border: none; }
 
-        .cta-btn:hover {
-            transform: scale(1.05);
-            background-color: var(--accent-color);
-        }
+    .content {
+      text-align: center;
+      padding: 0 20px;
+      max-width: 800px;
+    }
 
-        /* === 하단 고정 푸터 (링크 모음) === */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(44, 62, 80, 0.95);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            box-sizing: border-box;
-            backdrop-filter: blur(5px);
-            font-size: 0.9rem;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+    h2 {
+      font-size: 2.5rem;
+      margin: 0 0 10px 0;
+      color: var(--primary-color);
+      letter-spacing: -0.2px;
+    }
 
-        .footer-link {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
 
-        .footer-link:hover {
-            color: white;
-            text-decoration: underline;
-        }
+    .cta-btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
 
-        .divider {
-            color: #555;
-            user-select: none;
-        }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      background-color: var(--accent-color);
+    }
 
-        /* === 좌우 화살표 === */
-        .nav-arrow {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            z-index: 999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(44, 62, 80, 0.95);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      box-sizing: border-box;
+      backdrop-filter: blur(5px);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
 
-        .nav-arrow:hover {
-            background: var(--primary-color);
-            color: white;
-        }
+    .footer-link {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-        .prev { left: 20px; }
-        .next { right: 20px; }
+    .footer-link:hover {
+      color: white;
+      text-decoration: underline;
+    }
 
-        .prev.hidden, .next.hidden { display: none; }
+    .divider {
+      color: #555;
+      user-select: none;
+    }
 
-        @media (max-width: 768px) {
-            h2 { font-size: 1.8rem; }
-            .tab-btn { padding: 10px; font-size: 0.9rem; }
-            footer { font-size: 0.8rem; padding: 10px; }
-        }
-    </style>
+    .nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+    }
+
+    .nav-arrow:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    .prev.hidden, .next.hidden { display: none; }
+
+    @media (max-width: 768px) {
+      h2 { font-size: 1.8rem; }
+      .tab-btn { padding: 10px; font-size: 0.9rem; }
+      footer { font-size: 0.8rem; padding: 10px; gap: 12px; }
+      .logo { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">(주)여기건축사사무소</div>
-        <div class="tabs">
-            <button class="tab-btn active" onclick="goToSlide(0)">메타버스</button>
-            <button class="tab-btn" onclick="goToSlide(1)">그린리모델링</button>
-            <button class="tab-btn" onclick="goToSlide(2)">BIM</button>
-        </div>
-    </header>
+  <header>
+    <div class="logo">(주)여기건축사사무소</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="goToSlide(0)">메타버스</button>
+      <button class="tab-btn" onclick="goToSlide(1)">그린리모델링</button>
+      <button class="tab-btn" onclick="goToSlide(2)">BIM</button>
+    </div>
+  </header>
 
-    <div class="slider-container" id="slider">
-        <div class="section">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0" allowfullscreen></iframe>
-            </div>
-            <div class="content">
-                <h2>METAVERSE ARCHITECTURE</h2>
-                <p>가상 공간에서 미리 짓고, 체험하세요.</p>
-                <a href="https://yugy.cloud" class="cta-btn" target="_blank">온라인 모델하우스 입장 (yugy.cloud)</a>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0" allowfullscreen></iframe>
-            </div>
-            <div class="content">
-                <h2>GREEN REMODELING</h2>
-                <p>건축사가 직접 진단하는 건물 심폐소생 프로젝트.</p>
-                <a href="https://smartstore.naver.com/kiendeod_susutto" target="_blank" class="cta-btn" style="background-color: #03C75A;">비용 확인 및 진단 신청</a>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0" allowfullscreen></iframe>
-            </div>
-            <div class="content">
-                <h2>BIM ENGINEERING</h2>
-                <p>데이터로 짓는 정밀 시공.<br>오차 없는 설계를 약속합니다.</p>
-                <a href="#" class="cta-btn">BIM 포트폴리오 보기</a>
-            </div>
-        </div>
+  <div class="slider-container" id="slider">
+    <div class="section">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0"
+          allowfullscreen
+          title="Metaverse Architecture Video"
+        ></iframe>
+      </div>
+      <div class="content">
+        <h2>METAVERSE ARCHITECTURE</h2>
+        <p>가상 공간에서 미리 짓고, 체험하세요.</p>
+        <a href="https://yugy.cloud" class="cta-btn" target="_blank" rel="noopener noreferrer">
+          온라인 모델하우스 입장 (yugy.cloud)
+        </a>
+      </div>
     </div>
 
-    <div class="nav-arrow prev hidden" onclick="moveSlide(-1)">&#10094;</div>
-    <div class="nav-arrow next" onclick="moveSlide(1)">&#10095;</div>
+    <div class="section">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0"
+          allowfullscreen
+          title="Green Remodeling Video"
+        ></iframe>
+      </div>
+      <div class="content">
+        <h2>GREEN REMODELING</h2>
+        <p>건축사가 직접 진단하는 건물 심폐소생 프로젝트.</p>
+        <a
+          href="https://smartstore.naver.com/kiendeod_susutto"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cta-btn"
+          style="background-color:#03C75A;"
+        >
+          비용 확인 및 진단 신청
+        </a>
+      </div>
+    </div>
 
-    <footer>
-        <a href="https://yugy.cloud" target="_blank" class="footer-link">☁️ yugy.cloud</a>
-        <span class="divider">|</span>
-        <a href="https://yugy.site" target="_blank" class="footer-link">🚑 뚱뚜루 도면소생술</a>
-        <span class="divider">|</span>
-        <a href="https://yugy.store" target="_blank" class="footer-link">🛍️ yugy.store</a>
-        <span class="divider">|</span>
-        <a href="https://smartstore.naver.com/kiendeod_susutto" target="_blank" class="footer-link" style="color:#03C75A; font-weight:bold;">N 스마트스토어</a>
-    </footer>
+    <div class="section">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0"
+          allowfullscreen
+          title="BIM Engineering Video"
+        ></iframe>
+      </div>
+      <div class="content">
+        <h2>BIM ENGINEERING</h2>
+        <p>데이터로 짓는 정밀 시공.<br>오차 없는 설계를 약속합니다.</p>
+        <a href="#" class="cta-btn" onclick="return false;">BIM 포트폴리오 보기</a>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        let currentSlide = 0;
-        const totalSlides = 3;
-        const slider = document.getElementById('slider');
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const prevBtn = document.querySelector('.prev');
-        const nextBtn = document.querySelector('.next');
+  <div class="nav-arrow prev hidden" onclick="moveSlide(-1)">&#10094;</div>
+  <div class="nav-arrow next" onclick="moveSlide(1)">&#10095;</div>
 
-        function updateUI() {
-            slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
-            tabBtns.forEach((btn, index) => {
-                if(index === currentSlide) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-            if(currentSlide === 0) prevBtn.classList.add('hidden');
-            else prevBtn.classList.remove('hidden');
-            if(currentSlide === totalSlides - 1) nextBtn.classList.add('hidden');
-            else nextBtn.classList.remove('hidden');
-        }
+  <footer>
+    <a href="https://yugy.cloud" target="_blank" rel="noopener noreferrer" class="footer-link">☁️ yugy.cloud</a>
+    <span class="divider">|</span>
+    <a href="https://yugy.site" target="_blank" rel="noopener noreferrer" class="footer-link">🚑 뚱뚜루 도면소생술</a>
+    <span class="divider">|</span>
+    <a href="https://yugy.store" target="_blank" rel="noopener noreferrer" class="footer-link">🛍️ yugy.store</a>
+    <span class="divider">|</span>
+    <a
+      href="https://smartstore.naver.com/kiendeod_susutto"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="footer-link"
+      style="color:#03C75A;font-weight:bold;"
+    >
+      N 스마트스토어
+    </a>
+  </footer>
 
-        function moveSlide(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-            updateUI();
-        }
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 3;
+    const slider = document.getElementById('slider');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
 
-        function goToSlide(index) {
-            currentSlide = index;
-            updateUI();
-        }
-    </script>
+    function updateUI() {
+      slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
+      tabBtns.forEach((btn, index) => {
+        if (index === currentSlide) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      if (currentSlide === 0) prevBtn.classList.add('hidden');
+      else prevBtn.classList.remove('hidden');
+
+      if (currentSlide === totalSlides - 1) nextBtn.classList.add('hidden');
+      else nextBtn.classList.remove('hidden');
+    }
+
+    function moveSlide(direction) {
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = 0;
+      if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+      updateUI();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateUI();
+    }
+
+    // 최초 UI 세팅
+    updateUI();
+  </script>
 
 </body>
 </html>
