@@ -11,7 +11,7 @@
       --muted:#64748b;
       --card:#ffffff;
       --line:#e5e7eb;
-      --accent:#16a34a; /* green underline */
+      --accent:#16a34a;
       --btn:#0f172a;
       --btn2:#ffffff;
       --danger:#ef4444;
@@ -138,6 +138,57 @@
       .hero h1{font-size:40px}
       .nav{gap:14px; font-size:14px}
     }
+
+    /* =========================
+       ✅ 유튜브 모달(팝업) 스타일
+    ========================== */
+    .ytModal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(15,23,42,.55);
+      z-index:9999;
+    }
+    .ytModal.show{display:flex;}
+    .ytCard{
+      width:min(980px, 100%);
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 20px 70px rgba(15,23,42,.25);
+      border:1px solid rgba(15,23,42,.08);
+    }
+    .ytTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      background:rgba(246,242,234,.75);
+      border-bottom:1px solid rgba(15,23,42,.08);
+      font-weight:900;
+    }
+    .ytClose{
+      border:1px solid rgba(15,23,42,.2);
+      background:#fff;
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .ytClose:hover{background:rgba(15,23,42,.04);}
+    .ytFrameWrap{
+      width:100%;
+      aspect-ratio:16/9;
+      background:#000;
+      position:relative;
+    }
+    .ytFrameWrap iframe{
+      position:absolute; inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
   </style>
 </head>
 <body>
@@ -145,7 +196,6 @@
     <header>
       <div class="brand">(주)여기건축사사무소</div>
 
-      <!-- ✅ 탭 순서: 1 우리가 하는 일 / 2 그린리모델링 / 3 BIM / 4 메타버스 -->
       <nav class="nav" id="tabs">
         <div class="tab active" data-target="sec-work"><strong>1</strong>우리가 하는 일</div>
         <div class="tab" data-target="sec-green"><strong>2</strong>그린리모델링</div>
@@ -154,9 +204,7 @@
       </nav>
     </header>
 
-    <!-- =========================
-         1) 우리가 하는 일
-    ========================== -->
+    <!-- 1) 우리가 하는 일 -->
     <section class="section active" id="sec-work">
       <div class="hero">
         <div class="kicker">불확실성을 줄여, 예측 가능한 결과로</div>
@@ -201,10 +249,7 @@
       <div class="note">※ 현장 확인 없이 하자 단정은 하지 않습니다. 대신 “확인 순서와 기준”을 제공합니다.</div>
     </section>
 
-    <!-- =========================
-         2) 그린리모델링
-         + 유튜브 버튼(1개)
-    ========================== -->
+    <!-- 2) 그린리모델링 -->
     <section class="section" id="sec-green">
       <div class="hero">
         <div class="kicker">돈 새는 구멍부터 막는 그린리모델링</div>
@@ -244,17 +289,14 @@
 
       <div class="actions">
         <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">진단 신청하기 (yugy.store)</a>
-        <a class="btn youtube" id="yt-green" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
+        <!-- ✅ 이제 새창 안 열고, 눌러서 바로 재생 -->
+        <a class="btn youtube" id="yt-green" href="#">유튜브 동영상</a>
       </div>
 
-      <div class="note">※ 유튜브는 “설명”이 아니라 “작동 방식”을 보여주는 용도로 버튼 하나만 두는 걸 추천해요.</div>
+      <div class="note">※ 버튼을 누르면 페이지 안에서 바로 재생됩니다.</div>
     </section>
 
-    <!-- =========================
-         3) BIM
-         + 유튜브 버튼(1개)
-         + PDF 4개(기존 1 + 샘플 3)
-    ========================== -->
+    <!-- 3) BIM -->
     <section class="section" id="sec-bim">
       <div class="hero">
         <div class="kicker">불안과 리스크를 “표”로 잠재우는 BIM</div>
@@ -267,7 +309,7 @@
 
       <div class="actions">
         <a class="btn primary" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF (기존)</a>
-        <a class="btn youtube" id="yt-bim" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
+        <a class="btn youtube" id="yt-bim" href="#">유튜브 동영상</a>
       </div>
 
       <div class="note">* 샘플에는 “SAMPLE / DO NOT USE” 워터마크 유지 추천(자료 무단 사용 방지)</div>
@@ -299,10 +341,7 @@
       </div>
     </section>
 
-    <!-- =========================
-         4) 메타버스
-         + 유튜브 버튼(1개)
-    ========================== -->
+    <!-- 4) 메타버스 -->
     <section class="section" id="sec-meta">
       <div class="hero">
         <div class="kicker">설명으로 끝내지 않고, “미리 경험”</div>
@@ -342,12 +381,12 @@
 
       <div class="actions">
         <a class="btn primary" href="https://yugy.cloud" target="_blank" rel="noopener">메타버스/디지털트윈 보기 (yugy.cloud)</a>
-        <a class="btn youtube" id="yt-meta" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
+        <a class="btn youtube" id="yt-meta" href="#">유튜브 동영상</a>
       </div>
     </section>
 
     <footer>
-      <div>© YUGY Architectural Office</div>
+      <div>© yugy</div>
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
         <a href="https://yugy.cloud" target="_blank" rel="noopener">yugy.cloud</a>
         <a href="https://yugy.site" target="_blank" rel="noopener">yugy.site</a>
@@ -356,24 +395,90 @@
     </footer>
   </div>
 
+  <!-- =========================
+       ✅ 유튜브 모달(팝업) 구조
+       버튼 누르면 여기서 바로 재생됨
+  ========================== -->
+  <div class="ytModal" id="ytModal" aria-hidden="true">
+    <div class="ytCard" role="dialog" aria-modal="true" aria-label="유튜브 영상">
+      <div class="ytTop">
+        <div id="ytTitle">유튜브 영상</div>
+        <button class="ytClose" id="ytClose" type="button">닫기 ✕</button>
+      </div>
+      <div class="ytFrameWrap">
+        <iframe
+          id="ytFrame"
+          src=""
+          title="YouTube video player"
+          allow="autoplay; encrypted-media; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
   <script>
     /* =========================
-       ✅ 유튜브 링크 3개 (사용자가 준 embed 링크 그대로)
+       ✅ 유튜브 링크 3개
     ========================== */
     const YT_META  = "https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0";
     const YT_GREEN = "https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0";
     const YT_BIM   = "https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0";
 
-    // ✅ 버튼에 링크 세팅 (id는 yt-green / yt-bim / yt-meta)
-    const setHref = (id, url) => {
-      const el = document.getElementById(id);
-      if (!el) return console.warn("Missing element:", id);
-      el.href = url;
-    };
+    /* =========================
+       ✅ 클릭하면 "바로 재생" 핵심
+       autoplay=1 + mute=1
+       (브라우저 정책 때문에 음소거 자동재생이 제일 안정적)
+    ========================== */
+    const modal = document.getElementById("ytModal");
+    const frame = document.getElementById("ytFrame");
+    const titleEl = document.getElementById("ytTitle");
+    const closeBtn = document.getElementById("ytClose");
 
-    setHref("yt-green", YT_GREEN);
-    setHref("yt-bim",   YT_BIM);
-    setHref("yt-meta",  YT_META);
+    function withAutoPlay(url){
+      // 기존 URL에 파라미터가 이미 있으니 &로 붙이면 됨
+      // autoplay=1 : 자동 재생
+      // mute=1    : 자동재생 차단 방지(안정성)
+      // playsinline=1 : 모바일에서 전체화면 강제 줄임
+      return url + "&autoplay=1&mute=1&playsinline=1";
+    }
+
+    function openVideo(label, url){
+      titleEl.textContent = label;
+      frame.src = withAutoPlay(url);
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // 뒤 스크롤 잠금
+    }
+
+    function closeVideo(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      frame.src = ""; // 닫을 때 재생 멈추기
+      document.body.style.overflow = ""; // 스크롤 복구
+    }
+
+    function bindVideoButton(id, label, url){
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        openVideo(label, url);
+      });
+    }
+
+    bindVideoButton("yt-green", "그린리모델링 유튜브", YT_GREEN);
+    bindVideoButton("yt-bim",   "BIM 유튜브", YT_BIM);
+    bindVideoButton("yt-meta",  "메타버스 유튜브", YT_META);
+
+    // 모달 닫기: 버튼 / 바깥 클릭 / ESC
+    closeBtn.addEventListener("click", closeVideo);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeVideo();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) closeVideo();
+    });
 
     // 탭 동작
     const tabs = document.querySelectorAll(".tab");
@@ -393,4 +498,3 @@
   </script>
 </body>
 </html>
-
