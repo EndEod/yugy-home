@@ -1,544 +1,515 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>(주)여기건축사사무소 - Metaverse & Green Remodeling</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>(주)여기건축사사무소</title>
 
-  <!-- ✅ Google tag (gtag.js) - yugy.org / GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXEF0EWWVB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-TXEF0EWWVB', { send_page_view: true });
-
-    // ✅ (옵션) 외부 링크 클릭 추적
-    function trackOutboundClick(a){
-      try{
-        const url = a.href || '';
-        const text = (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 120);
-        const isExternal = a.host && (a.host !== location.host);
-
-        gtag('event', 'outbound_click', {
-          link_url: url,
-          link_text: text,
-          link_domain: a.host || '',
-          link_is_external: !!isExternal
-        });
-      }catch(e){}
-    }
-
-    document.addEventListener('click', function(e){
-      const a = e.target.closest && e.target.closest('a');
-      if(!a) return;
-      trackOutboundClick(a);
-    }, true);
-  </script>
+  <!-- ✅ (선택) 폰트: Pretendard CDN (원하면 유지/삭제 가능) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 
   <style>
-    :root {
-      --primary-color: #2c3e50;
-      --accent-color: #27ae60;
-      --bg-color: #fdfcf5;
-      --text-color: #333;
-      --slide-count: 4;
+    :root{
+      --bg:#f6f2e8;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --accent:#1aa34a; /* 초록 밑줄 */
+      --btn:#1f2d3d;    /* 진한 버튼 */
+      --btn2:#ffffff;   /* 흰 버튼 */
+      --btn2line:#1f2d3d;
+      --radius:18px;
+      --shadow: 0 12px 30px rgba(0,0,0,.08);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Pretendard, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color:var(--text);
+      background:var(--bg);
     }
 
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
-      background-color: var(--bg-color);
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:#fff;
+      border-bottom:1px solid var(--line);
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 18px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+      gap:18px;
+    }
+    .brand{
+      font-weight:800;
+      letter-spacing:-.3px;
+      font-size:18px;
+      white-space:nowrap;
+    }
+    nav{
+      display:flex;
+      gap:28px;
+      align-items:flex-end;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      position:relative;
+      text-decoration:none;
+      color:#9aa0a6;
+      font-weight:700;
+      padding:8px 2px 14px;
+      letter-spacing:-.2px;
+      white-space:nowrap;
+    }
+    nav a .n{
+      font-size:12px;
+      color:#c0c4c9;
+      margin-right:6px;
+      font-weight:800;
+    }
+    nav a.active{
+      color:#111827;
+    }
+    nav a.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:3px;
+      background:var(--accent);
+      border-radius:3px;
     }
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 70px;
-      background: rgba(255, 255, 255, 0.95);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      box-sizing: border-box;
-      gap: 10px;
+    /* Sections */
+    section{
+      padding:70px 0;
+    }
+    .hero{
+      text-align:center;
+      padding:55px 0 10px;
+    }
+    .kicker{
+      color:var(--accent);
+      font-weight:800;
+      letter-spacing:-.2px;
+      margin-bottom:10px;
+    }
+    .title{
+      font-size:48px;
+      letter-spacing:-1px;
+      margin:0 0 14px;
+    }
+    .sub{
+      color:var(--muted);
+      line-height:1.7;
+      margin:0 auto;
+      max-width:760px;
+      font-weight:500;
     }
 
-    .logo {
-      font-weight: 900;
-      font-size: 1.2rem;
-      color: var(--primary-color);
-      white-space: nowrap;
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+      margin:34px auto 26px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px 20px;
+      text-align:left;
+      min-height:140px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.3px;
+    }
+    .card ul{
+      margin:0;
+      padding-left:18px;
+      color:#374151;
+      line-height:1.65;
     }
 
-    .tabs {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    /* Buttons */
+    .btnrow{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin:16px 0 8px;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      font-weight:800;
+      letter-spacing:-.2px;
+      border-radius:999px;
+      padding:14px 20px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+    }
+    .btn.primary{
+      background:var(--btn);
+      color:#fff;
+    }
+    .btn.ghost{
+      background:var(--btn2);
+      color:var(--btn2line);
+      border:2px solid var(--btn2line);
+      box-shadow:none;
+    }
+    .note{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:10px;
     }
 
-    .tab-btn {
-      padding: 10px 18px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #aaa;
-      position: relative;
-      transition: all 0.3s;
-      white-space: nowrap;
+    /* BIM sample grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:26px;
+    }
+    .mini{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+    .mini h4{
+      margin:0 0 8px;
+      font-size:16px;
+      letter-spacing:-.3px;
+    }
+    .mini p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+    .mini .links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      text-decoration:none;
+      color:#111827;
+      font-weight:800;
+      font-size:13px;
+      background:#fff;
+    }
+    .pill:hover{
+      border-color:#cbd5e1;
     }
 
-    .tab-btn:hover, .tab-btn.active {
-      color: var(--primary-color);
+    /* Footer */
+    footer{
+      background:#334155;
+      color:#e5e7eb;
+      padding:26px 0;
+      margin-top:30px;
+    }
+    .footlinks{
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      flex-wrap:wrap;
+      font-weight:700;
+    }
+    .footlinks a{
+      color:#e5e7eb;
+      text-decoration:none;
+      opacity:.95;
+    }
+    .footlinks a:hover{
+      opacity:1;
+      text-decoration:underline;
     }
 
-    .tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -23px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background-color: var(--accent-color);
-    }
-
-    .slider-container {
-      width: calc(var(--slide-count) * 100vw);
-      height: 100vh;
-      display: flex;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .section {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      box-sizing: border-box;
-      padding-top: 60px;
-      padding-bottom: 50px;
-    }
-
-    .video-wrapper {
-      width: 90%;
-      max-width: 900px;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    iframe { width: 100%; height: 100%; border: none; }
-
-    .content {
-      text-align: center;
-      padding: 0 20px;
-      max-width: 900px;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      margin: 0 0 10px 0;
-      color: var(--primary-color);
-      letter-spacing: -0.2px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      color: #666;
-      margin-bottom: 22px;
-      line-height: 1.55;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      padding: 15px 40px;
-      background-color: var(--primary-color);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      transition: transform 0.2s, background-color 0.2s;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .cta-btn:hover {
-      transform: scale(1.05);
-      background-color: var(--accent-color);
-    }
-
-    .kicker {
-      display: inline-block;
-      font-weight: 900;
-      color: var(--accent-color);
-      margin-bottom: 8px;
-      letter-spacing: -0.2px;
-    }
-
-    .cards {
-      width: min(900px, 100%);
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 14px auto 18px;
-      text-align: left;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 16px;
-      padding: 18px 18px 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    }
-
-    .card h3 {
-      margin: 0 0 10px 0;
-      font-size: 1.1rem;
-      color: var(--primary-color);
-      letter-spacing: -0.2px;
-    }
-
-    .card ul {
-      margin: 0;
-      padding-left: 18px;
-      color: #555;
-      line-height: 1.6;
-      font-size: 0.98rem;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .secondary-btn {
-      background: transparent;
-      border: 2px solid var(--primary-color);
-      color: var(--primary-color);
-      box-shadow: none;
-    }
-    .secondary-btn:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .note {
-      font-size: 0.95rem;
-      color: #666;
-      margin-top: 12px;
-      line-height: 1.5;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(44, 62, 80, 0.95);
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      box-sizing: border-box;
-      backdrop-filter: blur(5px);
-      font-size: 0.9rem;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-link {
-      color: #ccc;
-      text-decoration: none;
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .footer-link:hover {
-      color: white;
-      text-decoration: underline;
-    }
-
-    .divider {
-      color: #555;
-      user-select: none;
-    }
-
-    .nav-arrow {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
-      background: rgba(255,255,255,0.8);
-      border-radius: 50%;
-      border: 1px solid #ddd;
-      cursor: pointer;
-      z-index: 999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transition: all 0.3s;
-    }
-
-    .nav-arrow:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .prev { left: 20px; }
-    .next { right: 20px; }
-
-    .prev.hidden, .next.hidden { display: none; }
-
-    @media (max-width: 900px) {
-      .cards { grid-template-columns: 1fr; text-align: left; }
-      h2 { font-size: 2.0rem; }
-    }
-
-    @media (max-width: 768px) {
-      h2 { font-size: 1.7rem; }
-      .tab-btn { padding: 10px; font-size: 0.9rem; }
-      footer { font-size: 0.8rem; padding: 10px; gap: 12px; }
-      .logo { font-size: 1rem; }
-      .cta-btn { padding: 13px 28px; font-size: 1rem; }
+    /* Responsive */
+    @media (max-width: 960px){
+      .cards{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .title{ font-size:38px; }
+      nav{ gap:16px; }
     }
   </style>
 </head>
+
 <body>
-
-  <header>
-    <div class="logo">(주)여기건축사사무소</div>
-    <div class="tabs">
-      <!-- ✅ 요청하신 순서: 1) 우리가 하는 일 2) 그린리모델링 3) BIM 4) 메타버스 -->
-      <button class="tab-btn active" onclick="goToSlide(0)">우리가 하는 일</button>
-      <button class="tab-btn" onclick="goToSlide(1)">그린리모델링</button>
-      <button class="tab-btn" onclick="goToSlide(2)">BIM</button>
-      <button class="tab-btn" onclick="goToSlide(3)">메타버스</button>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">(주)여기건축사사무소</div>
+      <nav>
+        <!-- ✅ 탭 순서: 1 우리가 하는 일 / 2 그린리모델링 / 3 BIM / 4 메타버스 -->
+        <a href="#work" class="active"><span class="n">1</span>우리가 하는 일</a>
+        <a href="#green"><span class="n">2</span>그린리모델링</a>
+        <a href="#bim"><span class="n">3</span>BIM</a>
+        <a href="#metaverse"><span class="n">4</span>메타버스</a>
+      </nav>
     </div>
-  </header>
+  </div>
+</header>
 
-  <div class="slider-container" id="slider">
-
-    <!-- 0) 우리가 하는 일 -->
-    <div class="section">
-      <div class="content">
+<main>
+  <!-- 1) 우리가 하는 일 -->
+  <section id="work">
+    <div class="wrap">
+      <div class="hero">
         <div class="kicker">불확실성을 줄여, 예측 가능한 결과로</div>
-        <h2>WHAT WE DO</h2>
-        <p>
-          점잖은 고객이 원하는 건 ‘말’보다 <b>기준</b>입니다.<br>
+        <h1 class="title">WHAT WE DO</h1>
+        <p class="sub">
+          점잖은 고객이 원하는 건 ‘말’보다 기준입니다.<br>
           비용·일정·민원 리스크를 정리해 의사결정을 쉽게 만듭니다.
         </p>
+      </div>
 
-        <div class="cards">
-          <div class="card">
-            <h3>벤처/사업가 사옥</h3>
-            <ul>
-              <li>업무 중단 최소화(공정·동선 중심)</li>
-              <li>브랜딩/공간 경험을 설계로 정리</li>
-              <li>예산·일정·결정 포인트 문서화</li>
-            </ul>
-          </div>
+      <div class="cards">
+        <div class="card">
+          <h3>벤처/사업가 사옥</h3>
+          <ul>
+            <li>업무 중단 최소화(공정·동선 중심)</li>
+            <li>브랜딩/공간 경험을 설계로 정리</li>
+            <li>예산·일정·결정 포인트 문서화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>공공기관 리모델링</h3>
+          <ul>
+            <li>예산·공정·민원 리스크 관리</li>
+            <li>변경/준공 도서 정리 흐름 설계</li>
+            <li>보고/감사 대응이 편한 체계</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>다가구·꼬마빌딩·다세대</h3>
+          <ul>
+            <li>임대 유지하면서 공사 리스크 최소화</li>
+            <li>공사비 폭탄/분쟁/지연 방지 기준</li>
+            <li>현장 조건 대안 비교</li>
+          </ul>
+        </div>
+      </div>
 
-          <div class="card">
-            <h3>공공기관 리모델링</h3>
-            <ul>
-              <li>예산·공정·민원 리스크 관리</li>
-              <li>변경/준공 도서 정리 흐름 설계</li>
-              <li>보고/감사 대응이 편한 체계</li>
-            </ul>
-          </div>
+      <div class="btnrow">
+        <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">상담/진단 시작하기 (yugy.store)</a>
+        <!-- ✅ 기존 루트 PDF -->
+        <a class="btn ghost" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF 보기</a>
+      </div>
 
-          <div class="card">
-            <h3>다가구·꼬마빌딩·다세대</h3>
-            <ul>
-              <li>임대 유지하면서 공사 리스크 최소화</li>
-              <li>공사비 폭탄/분쟁/지연 방지 기준</li>
-              <li>현장 조건 대안 비교</li>
-            </ul>
+      <div class="note">※ 현장 확인 없이 “하자 단정”은 하지 않습니다. 대신 <b>확인 순서</b>와 <b>기준</b>을 제공합니다.</div>
+    </div>
+  </section>
+
+  <!-- 2) 그린리모델링 -->
+  <section id="green">
+    <div class="wrap">
+      <div class="hero">
+        <div class="kicker">에너지 비용은 줄이고, 성능은 올리고</div>
+        <h2 class="title">GREEN REMODELING</h2>
+        <p class="sub">
+          단열/창호/설비/환기 등 ‘돈 새는 구멍’을 먼저 잡고,
+          지원제도·검증자료·공정관리를 한 흐름으로 묶습니다.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>핵심 접근</h3>
+          <ul>
+            <li>에너지 절감 ‘가능성’부터 빠르게 스크리닝</li>
+            <li>자재 성적서/인증/시공범위 증빙 체크</li>
+            <li>공정 간섭(결로/누수/환기) 리스크 예방</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>산출물 예시</h3>
+          <ul>
+            <li>공사 범위 정의서(말싸움 방지용)</li>
+            <li>예산 프레임(증액 포인트 선제 차단)</li>
+            <li>현장 체크리스트(감리/검수 기준)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>적용 대상</h3>
+          <ul>
+            <li>노후 주택/다가구/다세대</li>
+            <li>소규모 근생/사옥</li>
+            <li>공공/복지시설 리모델링</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">에너지/리모델링 진단 신청</a>
+        <a class="btn ghost" href="https://yugy.cloud" target="_blank" rel="noopener">온라인 모델하우스 (yugy.cloud)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) BIM -->
+  <section id="bim">
+    <div class="wrap">
+      <div class="hero">
+        <div class="kicker">“도면”을 “결정 가능한 자료”로</div>
+        <h2 class="title">BIM</h2>
+        <p class="sub">
+          BIM은 멋내기용 그림이 아니라, <b>비용·공정·리스크를 눈에 보이게</b> 만드는 도구입니다.<br>
+          아래 샘플은 “추가공사/변경”에서 흔히 터지는 비용 폭탄을 막기 위한 문서 구조 예시예요.
+        </p>
+      </div>
+
+      <!-- ✅ 새로 올린 samples/ PDF 3종 링크 -->
+      <div class="grid">
+        <div class="mini">
+          <h4>추가공사(변경) 비용 리스크 체크리스트</h4>
+          <p>증빙요청/검토결과까지 한 장에. “OK/확인필요/별도견적” 판단을 빠르게.</p>
+          <div class="links">
+            <a class="pill" href="samples/sample_add-cost-review.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="pill" href="samples/sample_add-cost-review.pdf" download>다운로드</a>
           </div>
         </div>
 
-        <div class="btn-row">
-          <a href="https://yugy.store" target="_blank" rel="noopener noreferrer" class="cta-btn">
-            상담/진단 시작하기 (yugy.store)
-          </a>
-          <a href="BIM_portfolio.pdf" target="_blank" rel="noopener noreferrer" class="cta-btn secondary-btn">
-            BIM 포트폴리오 PDF 보기
-          </a>
+        <div class="mini">
+          <h4>변경내역(실행) 정리 샘플</h4>
+          <p>계약수량 vs 실행수량/증감/변경사유를 정리해 분쟁 포인트를 선제 차단.</p>
+          <div class="links">
+            <a class="pill" href="samples/sample_change-cost-review.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="pill" href="samples/sample_change-cost-review.pdf" download>다운로드</a>
+          </div>
         </div>
 
-        <div class="note">
-          ※ 현장 확인 없이 하자 단정은 하지 않습니다. 대신 <b>확인 순서와 기준</b>을 제공합니다.
+        <div class="mini">
+          <h4>공정표(계획 vs 실적) 샘플</h4>
+          <p>늦어지는 이유가 “누구 탓”이 아니라 “공정 간섭”으로 보이게.</p>
+          <div class="links">
+            <a class="pill" href="samples/sample_schedule-plan-act.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="pill" href="samples/sample_schedule-plan-act.pdf" download>다운로드</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 1) 그린리모델링 -->
-    <div class="section">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0"
-          allowfullscreen
-          title="Green Remodeling Video"
-        ></iframe>
+      <div class="btnrow" style="margin-top:22px;">
+        <a class="btn ghost" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF (기존)</a>
       </div>
-      <div class="content">
-        <h2>GREEN REMODELING</h2>
-        <p>건축사가 직접 진단하는 건물 심폐소생 프로젝트.</p>
-        <a
-          href="https://smartstore.naver.com/kiendeod_susutto"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="cta-btn"
-          style="background-color:#03C75A;"
-        >
-          비용 확인 및 진단 신청
-        </a>
-      </div>
-    </div>
 
-    <!-- 2) BIM -->
-    <div class="section">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0"
-          allowfullscreen
-          title="BIM Engineering Video"
-        ></iframe>
-      </div>
-      <div class="content">
-        <h2>BIM ENGINEERING</h2>
-        <p>데이터로 짓는 정밀 시공.<br>오차 없는 설계를 약속합니다.</p>
-        <a href="BIM_portfolio.pdf" class="cta-btn" target="_blank" rel="noopener noreferrer">
-          BIM 포트폴리오 보기 (PDF)
-        </a>
-      </div>
+      <div class="note">※ 샘플에는 “SAMPLE / DO NOT USE” 워터마크를 유지하는 걸 추천해요. (자료 무단 사용 방지)</div>
     </div>
+  </section>
 
-    <!-- 3) 메타버스 -->
-    <div class="section">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0"
-          allowfullscreen
-          title="Metaverse Architecture Video"
-        ></iframe>
+  <!-- 4) 메타버스 -->
+  <section id="metaverse">
+    <div class="wrap">
+      <div class="hero">
+        <div class="kicker">설명으로 끝내지 않고, “미리 경험”</div>
+        <h2 class="title">METAVERSE</h2>
+        <p class="sub">
+          선택은 빠르게, 후회는 줄이게.<br>
+          공간을 디지털로 먼저 경험하고, 결정 기준을 공유하는 방식입니다.
+        </p>
       </div>
-      <div class="content">
-        <h2>METAVERSE ARCHITECTURE</h2>
-        <p>가상 공간에서 미리 짓고, 체험하세요.</p>
-        <a href="https://yugy.cloud" class="cta-btn" target="_blank" rel="noopener noreferrer">
-          온라인 모델하우스 입장 (yugy.cloud)
-        </a>
+
+      <div class="cards">
+        <div class="card">
+          <h3>고객이 얻는 것</h3>
+          <ul>
+            <li>시공 전에 공간/동선/채광을 미리 확인</li>
+            <li>의사결정 포인트를 가족/동업자와 공유</li>
+            <li>“나중에 바꿀게요”로 생기는 비용 증가 예방</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>적용 예</h3>
+          <ul>
+            <li>사옥/근린생활시설</li>
+            <li>다가구·꼬마빌딩 임대+리모델링</li>
+            <li>공공/복지시설 사용자 동선 검토</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>연결</h3>
+          <ul>
+            <li>BIM → 공정/비용 기준</li>
+            <li>메타버스 → 체험/의사결정</li>
+            <li>그린리모델링 → 성능/운영비 절감</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <a class="btn primary" href="https://yugy.cloud" target="_blank" rel="noopener">메타버스/디지털트윈 보기 (yugy.cloud)</a>
       </div>
     </div>
+  </section>
+</main>
 
+<footer>
+  <div class="wrap">
+    <div class="footlinks">
+      <a href="https://yugy.cloud" target="_blank" rel="noopener">🧊 yugy.cloud</a>
+      <a href="https://yugy.site" target="_blank" rel="noopener">📘 도면소생술 yugy.site</a>
+      <a href="https://yugy.store" target="_blank" rel="noopener">🛒 yugy.store</a>
+      <a href="https://smartstore.naver.com/" target="_blank" rel="noopener">🟩 스마트스토어</a>
+    </div>
   </div>
+</footer>
 
-  <div class="nav-arrow prev hidden" onclick="moveSlide(-1)">&#10094;</div>
-  <div class="nav-arrow next" onclick="moveSlide(1)">&#10095;</div>
+<script>
+  // ✅ 스크롤 위치에 따라 상단 탭 활성화
+  const navLinks = [...document.querySelectorAll("nav a")];
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute("href")));
 
-  <footer>
-    <a href="https://yugy.cloud" target="_blank" rel="noopener noreferrer" class="footer-link">☁️ yugy.cloud</a>
-    <span class="divider">|</span>
-    <a href="https://yugy.site" target="_blank" rel="noopener noreferrer" class="footer-link">🚑 뚱뚜루 도면소생술</a>
-    <span class="divider">|</span>
-    <a href="https://yugy.store" target="_blank" rel="noopener noreferrer" class="footer-link">🛍️ yugy.store</a>
-    <span class="divider">|</span>
-    <a
-      href="https://smartstore.naver.com/kiendeod_susutto"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="footer-link"
-      style="color:#03C75A;font-weight:bold;"
-    >
-      N 스마트스토어
-    </a>
-  </footer>
+  const setActive = (id) => {
+    navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+  };
 
-  <script>
-    let currentSlide = 0;
-    const totalSlides = 4;
-    const slider = document.getElementById('slider');
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 });
 
-    // ✅ 요청 순서 반영
-    const slideNames = ['what_we_do', 'green_remodeling', 'bim', 'metaverse'];
-    let lastTrackedSlide = -1;
+  sections.forEach(s => s && io.observe(s));
 
-    function trackSlideView() {
-      try {
-        if (lastTrackedSlide === currentSlide) return;
-        lastTrackedSlide = currentSlide;
-
-        gtag('event', 'slide_view', {
-          slide_index: currentSlide,
-          slide_name: slideNames[currentSlide] || `slide_${currentSlide}`
-        });
-      } catch(e) {}
-    }
-
-    function updateUI() {
-      slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
-
-      tabBtns.forEach((btn, index) => {
-        if (index === currentSlide) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-
-      if (currentSlide === 0) prevBtn.classList.add('hidden');
-      else prevBtn.classList.remove('hidden');
-
-      if (currentSlide === totalSlides - 1) nextBtn.classList.add('hidden');
-      else nextBtn.classList.remove('hidden');
-
-      trackSlideView();
-    }
-
-    function moveSlide(direction) {
-      currentSlide += direction;
-      if (currentSlide < 0) currentSlide = 0;
-      if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-      updateUI();
-    }
-
-    function goToSlide(index) {
-      currentSlide = index;
-      updateUI();
-    }
-
-    updateUI();
-  </script>
-
+  // ✅ 부드러운 스크롤
+  navLinks.forEach(a => {
+    a.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      const target = document.querySelector(a.getAttribute("href"));
+      if(!target) return;
+      target.scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+  });
+</script>
 </body>
 </html>
