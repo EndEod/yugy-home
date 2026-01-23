@@ -139,9 +139,7 @@
       .nav{gap:14px; font-size:14px}
     }
 
-    /* =========================
-       ✅ 유튜브 모달(팝업) 스타일
-    ========================== */
+    /* ✅ 유튜브 모달 */
     .ytModal{
       position:fixed; inset:0;
       display:none;
@@ -244,6 +242,11 @@
 
       <div class="actions">
         <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">상담/진단 시작하기 (yugy.store)</a>
+
+        <!-- ✅ 여기! 없어졌던 자리 = 두 번째 버튼 -->
+        <a class="btn" href="samples/sample_change-cost-review.pdf" target="_blank" rel="noopener">
+          준공금 정산 예시 PDF 보기
+        </a>
       </div>
 
       <div class="note">※ 현장 확인 없이 하자 단정은 하지 않습니다. 대신 “확인 순서와 기준”을 제공합니다.</div>
@@ -289,7 +292,6 @@
 
       <div class="actions">
         <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">진단 신청하기 (yugy.store)</a>
-        <!-- ✅ 이제 새창 안 열고, 눌러서 바로 재생 -->
         <a class="btn youtube" id="yt-green" href="#">유튜브 동영상</a>
       </div>
 
@@ -324,7 +326,7 @@
         </div>
 
         <div class="pdfBox">
-          <div class="pdfTitle">공사 실행내역정리 (샘플)</div>
+          <div class="pdfTitle">준공금 정산 예시 (샘플)</div>
           <div class="pdfBtns">
             <a class="btn small" href="samples/sample_change-cost-review.pdf" target="_blank" rel="noopener">보기</a>
             <a class="btn small" href="samples/sample_change-cost-review.pdf" download>다운로드</a>
@@ -386,7 +388,7 @@
     </section>
 
     <footer>
-      <div>© YUGY Design Group </div>
+      <div>© yugy</div>
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
         <a href="https://yugy.cloud" target="_blank" rel="noopener">yugy.cloud</a>
         <a href="https://yugy.site" target="_blank" rel="noopener">yugy.site</a>
@@ -395,10 +397,7 @@
     </footer>
   </div>
 
-  <!-- =========================
-       ✅ 유튜브 모달(팝업) 구조
-       버튼 누르면 여기서 바로 재생됨
-  ========================== -->
+  <!-- ✅ 유튜브 모달 -->
   <div class="ytModal" id="ytModal" aria-hidden="true">
     <div class="ytCard" role="dialog" aria-modal="true" aria-label="유튜브 영상">
       <div class="ytTop">
@@ -418,28 +417,16 @@
   </div>
 
   <script>
-    /* =========================
-       ✅ 유튜브 링크 3개
-    ========================== */
     const YT_META  = "https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0";
     const YT_GREEN = "https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0";
     const YT_BIM   = "https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0";
 
-    /* =========================
-       ✅ 클릭하면 "바로 재생" 핵심
-       autoplay=1 + mute=1
-       (브라우저 정책 때문에 음소거 자동재생이 제일 안정적)
-    ========================== */
     const modal = document.getElementById("ytModal");
     const frame = document.getElementById("ytFrame");
     const titleEl = document.getElementById("ytTitle");
     const closeBtn = document.getElementById("ytClose");
 
     function withAutoPlay(url){
-      // 기존 URL에 파라미터가 이미 있으니 &로 붙이면 됨
-      // autoplay=1 : 자동 재생
-      // mute=1    : 자동재생 차단 방지(안정성)
-      // playsinline=1 : 모바일에서 전체화면 강제 줄임
       return url + "&autoplay=1&mute=1&playsinline=1";
     }
 
@@ -448,14 +435,14 @@
       frame.src = withAutoPlay(url);
       modal.classList.add("show");
       modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden"; // 뒤 스크롤 잠금
+      document.body.style.overflow = "hidden";
     }
 
     function closeVideo(){
       modal.classList.remove("show");
       modal.setAttribute("aria-hidden", "true");
-      frame.src = ""; // 닫을 때 재생 멈추기
-      document.body.style.overflow = ""; // 스크롤 복구
+      frame.src = "";
+      document.body.style.overflow = "";
     }
 
     function bindVideoButton(id, label, url){
@@ -471,7 +458,6 @@
     bindVideoButton("yt-bim",   "BIM 유튜브", YT_BIM);
     bindVideoButton("yt-meta",  "메타버스 유튜브", YT_META);
 
-    // 모달 닫기: 버튼 / 바깥 클릭 / ESC
     closeBtn.addEventListener("click", closeVideo);
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeVideo();
@@ -480,7 +466,6 @@
       if (e.key === "Escape" && modal.classList.contains("show")) closeVideo();
     });
 
-    // 탭 동작
     const tabs = document.querySelectorAll(".tab");
     const sections = document.querySelectorAll(".section");
     tabs.forEach(t => {
@@ -498,4 +483,3 @@
   </script>
 </body>
 </html>
-
