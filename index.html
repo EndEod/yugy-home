@@ -244,7 +244,6 @@
 
       <div class="actions">
         <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">진단 신청하기 (yugy.store)</a>
-        <!-- ✅ 여기만 유튜브 링크 바꾸면 됨 -->
         <a class="btn youtube" id="yt-green" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
       </div>
 
@@ -267,10 +266,7 @@
       </div>
 
       <div class="actions">
-        <!-- ✅ 기존 파일(레포 루트) -->
         <a class="btn primary" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF (기존)</a>
-
-        <!-- ✅ BIM 탭 유튜브 버튼 -->
         <a class="btn youtube" id="yt-bim" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
       </div>
 
@@ -362,17 +358,22 @@
 
   <script>
     /* =========================
-       ✅ 유튜브 링크 3개만 여기 넣어줘!
-       (기존에 2/3/4 탭에 있던 링크 그대로 복붙)
+       ✅ 유튜브 링크 3개 (사용자가 준 embed 링크 그대로)
     ========================== */
-    const YT_GREEN = "https://www.youtube.com/"; // 2. 그린리모델링 유튜브 링크
-    const YT_BIM   = "https://www.youtube.com/"; // 3. BIM 유튜브 링크
-    const YT_META  = "https://www.youtube.com/"; // 4. 메타버스 유튜브 링크
+    const YT_META  = "https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0";
+    const YT_GREEN = "https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0";
+    const YT_BIM   = "https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0";
 
-    // 버튼에 링크 세팅
-    document.getElementById("embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0").href = YT_GREEN;
-    document.getElementById("embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0").href   = YT_BIM;
-    document.getElementById("embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0").href  = YT_META;
+    // ✅ 버튼에 링크 세팅 (id는 yt-green / yt-bim / yt-meta)
+    const setHref = (id, url) => {
+      const el = document.getElementById(id);
+      if (!el) return console.warn("Missing element:", id);
+      el.href = url;
+    };
+
+    setHref("yt-green", YT_GREEN);
+    setHref("yt-bim",   YT_BIM);
+    setHref("yt-meta",  YT_META);
 
     // 탭 동작
     const tabs = document.querySelectorAll(".tab");
