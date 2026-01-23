@@ -1,300 +1,173 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>(주)여기건축사사무소</title>
-
-  <!-- ✅ (선택) 폰트: Pretendard CDN (원하면 유지/삭제 가능) -->
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-
   <style>
     :root{
-      --bg:#f6f2e8;
+      --bg:#f6f2ea;
+      --ink:#0f172a;
+      --muted:#64748b;
       --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
       --line:#e5e7eb;
-      --accent:#1aa34a; /* 초록 밑줄 */
-      --btn:#1f2d3d;    /* 진한 버튼 */
-      --btn2:#ffffff;   /* 흰 버튼 */
-      --btn2line:#1f2d3d;
-      --radius:18px;
-      --shadow: 0 12px 30px rgba(0,0,0,.08);
+      --accent:#16a34a; /* green underline */
+      --btn:#0f172a;
+      --btn2:#ffffff;
+      --danger:#ef4444;
+      --shadow:0 8px 24px rgba(15,23,42,.08);
+      --r:18px;
     }
-    *{ box-sizing:border-box; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: Pretendard, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      color:var(--ink);
       background:var(--bg);
     }
-
-    /* Header */
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1180px; margin:0 auto; padding:24px 20px 80px;}
     header{
-      position:sticky;
-      top:0;
-      z-index:20;
-      background:#fff;
-      border-bottom:1px solid var(--line);
-    }
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:0 18px;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:18px 0;
-      gap:18px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:10px 0 18px;
     }
     .brand{
-      font-weight:800;
-      letter-spacing:-.3px;
-      font-size:18px;
-      white-space:nowrap;
+      font-weight:800; letter-spacing:-.02em; font-size:22px;
     }
-    nav{
-      display:flex;
-      gap:28px;
-      align-items:flex-end;
-      flex-wrap:wrap;
-      justify-content:flex-end;
+    .nav{
+      display:flex; gap:26px; align-items:flex-end;
+      font-weight:700; color:#94a3b8;
     }
-    nav a{
-      position:relative;
-      text-decoration:none;
-      color:#9aa0a6;
-      font-weight:700;
-      padding:8px 2px 14px;
-      letter-spacing:-.2px;
-      white-space:nowrap;
+    .tab{
+      position:relative; padding:6px 2px; cursor:pointer;
+      user-select:none;
     }
-    nav a .n{
-      font-size:12px;
-      color:#c0c4c9;
-      margin-right:6px;
-      font-weight:800;
-    }
-    nav a.active{
-      color:#111827;
-    }
-    nav a.active::after{
+    .tab strong{color:#94a3b8; font-weight:800; margin-right:6px}
+    .tab.active{color:var(--ink)}
+    .tab.active strong{color:var(--ink)}
+    .tab.active::after{
       content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:3px;
-      background:var(--accent);
-      border-radius:3px;
+      position:absolute; left:0; right:0; bottom:-10px;
+      height:3px; border-radius:99px; background:var(--accent);
     }
 
-    /* Sections */
-    section{
-      padding:70px 0;
-    }
+    .section{display:none; padding-top:36px;}
+    .section.active{display:block;}
+
     .hero{
-      text-align:center;
-      padding:55px 0 10px;
+      text-align:center; padding:34px 10px 24px;
     }
-    .kicker{
-      color:var(--accent);
-      font-weight:800;
-      letter-spacing:-.2px;
+    .hero .kicker{
+      color:var(--accent); font-weight:800; letter-spacing:-.01em;
       margin-bottom:10px;
     }
-    .title{
-      font-size:48px;
-      letter-spacing:-1px;
-      margin:0 0 14px;
+    .hero h1{
+      margin:0 0 10px; font-size:52px; letter-spacing:-.03em;
     }
-    .sub{
-      color:var(--muted);
-      line-height:1.7;
-      margin:0 auto;
-      max-width:760px;
-      font-weight:500;
+    .hero p{
+      margin:0; color:var(--muted); line-height:1.6;
+      max-width:760px; margin-left:auto; margin-right:auto;
     }
 
-    /* Cards */
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:18px;
-      margin:34px auto 26px;
+    .grid{
+      display:grid; grid-template-columns:repeat(3, 1fr);
+      gap:18px; margin-top:26px;
     }
     .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow: var(--shadow);
-      padding:18px 20px;
-      text-align:left;
-      min-height:140px;
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--r); box-shadow:var(--shadow);
+      padding:18px 18px 16px;
+      min-height:150px;
     }
     .card h3{
-      margin:0 0 10px;
-      font-size:18px;
-      letter-spacing:-.3px;
+      margin:0 0 10px; font-size:18px; letter-spacing:-.02em;
     }
-    .card ul{
-      margin:0;
-      padding-left:18px;
-      color:#374151;
-      line-height:1.65;
-    }
+    .card ul{margin:0; padding-left:18px; color:#334155; line-height:1.55}
+    .card li{margin:6px 0}
 
-    /* Buttons */
-    .btnrow{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin:16px 0 8px;
+    .actions{
+      display:flex; gap:10px; justify-content:center;
+      margin:24px 0 6px; flex-wrap:wrap;
     }
     .btn{
-      border:0;
-      cursor:pointer;
-      font-weight:800;
-      letter-spacing:-.2px;
-      border-radius:999px;
-      padding:14px 20px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+      border-radius:999px; padding:12px 18px;
+      border:1px solid var(--btn);
+      font-weight:800; cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--btn2); color:var(--btn);
+      box-shadow:0 10px 18px rgba(15,23,42,.06);
     }
-    .btn.primary{
-      background:var(--btn);
-      color:#fff;
+    .btn.primary{background:var(--btn); color:#fff;}
+    .btn.youtube{
+      border-color:var(--danger);
+      color:var(--danger);
+      background:#fff;
     }
-    .btn.ghost{
-      background:var(--btn2);
-      color:var(--btn2line);
-      border:2px solid var(--btn2line);
-      box-shadow:none;
-    }
+    .btn.small{padding:9px 14px; font-size:13px; font-weight:800;}
     .note{
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-      margin-top:10px;
+      text-align:center; color:#64748b; font-size:13px; margin-top:10px;
     }
 
-    /* BIM sample grid */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-      margin-top:26px;
+    .split{
+      display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
+      margin-top:18px;
     }
-    .mini{
-      background:#fff;
+    .pdfBox{
+      background:rgba(255,255,255,.75);
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
+      border-radius:var(--r);
+      padding:14px 14px 12px;
+      min-width:300px;
     }
-    .mini h4{
-      margin:0 0 8px;
-      font-size:16px;
-      letter-spacing:-.3px;
-    }
-    .mini p{
-      margin:0 0 12px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .mini .links{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      text-decoration:none;
-      color:#111827;
-      font-weight:800;
-      font-size:13px;
-      background:#fff;
-    }
-    .pill:hover{
-      border-color:#cbd5e1;
-    }
+    .pdfTitle{font-weight:900; margin-bottom:10px;}
+    .pdfBtns{display:flex; gap:8px; flex-wrap:wrap;}
 
-    /* Footer */
     footer{
-      background:#334155;
-      color:#e5e7eb;
-      padding:26px 0;
-      margin-top:30px;
-    }
-    .footlinks{
-      display:flex;
-      gap:18px;
-      justify-content:center;
-      flex-wrap:wrap;
+      margin-top:56px;
+      padding-top:18px;
+      border-top:1px solid rgba(15,23,42,.08);
+      color:#94a3b8;
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-weight:700;
     }
-    .footlinks a{
-      color:#e5e7eb;
-      text-decoration:none;
-      opacity:.95;
-    }
-    .footlinks a:hover{
-      opacity:1;
-      text-decoration:underline;
-    }
+    footer a{color:#64748b}
+    footer a:hover{color:#0f172a}
 
-    /* Responsive */
-    @media (max-width: 960px){
-      .cards{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: 1fr; }
-      .title{ font-size:38px; }
-      nav{ gap:16px; }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr; }
+      .hero h1{font-size:40px}
+      .nav{gap:14px; font-size:14px}
     }
   </style>
 </head>
-
 <body>
-<header>
   <div class="wrap">
-    <div class="topbar">
+    <header>
       <div class="brand">(주)여기건축사사무소</div>
-      <nav>
-        <!-- ✅ 탭 순서: 1 우리가 하는 일 / 2 그린리모델링 / 3 BIM / 4 메타버스 -->
-        <a href="#work" class="active"><span class="n">1</span>우리가 하는 일</a>
-        <a href="#green"><span class="n">2</span>그린리모델링</a>
-        <a href="#bim"><span class="n">3</span>BIM</a>
-        <a href="#metaverse"><span class="n">4</span>메타버스</a>
-      </nav>
-    </div>
-  </div>
-</header>
 
-<main>
-  <!-- 1) 우리가 하는 일 -->
-  <section id="work">
-    <div class="wrap">
+      <!-- ✅ 탭 순서: 1 우리가 하는 일 / 2 그린리모델링 / 3 BIM / 4 메타버스 -->
+      <nav class="nav" id="tabs">
+        <div class="tab active" data-target="sec-work"><strong>1</strong>우리가 하는 일</div>
+        <div class="tab" data-target="sec-green"><strong>2</strong>그린리모델링</div>
+        <div class="tab" data-target="sec-bim"><strong>3</strong>BIM</div>
+        <div class="tab" data-target="sec-meta"><strong>4</strong>메타버스</div>
+      </nav>
+    </header>
+
+    <!-- =========================
+         1) 우리가 하는 일
+    ========================== -->
+    <section class="section active" id="sec-work">
       <div class="hero">
         <div class="kicker">불확실성을 줄여, 예측 가능한 결과로</div>
-        <h1 class="title">WHAT WE DO</h1>
-        <p class="sub">
-          점잖은 고객이 원하는 건 ‘말’보다 기준입니다.<br>
+        <h1>WHAT WE DO</h1>
+        <p>
+          점잖은 건축은 “말”보다 “기준”으로 움직입니다.<br/>
           비용·일정·민원 리스크를 정리해 의사결정을 쉽게 만듭니다.
         </p>
       </div>
 
-      <div class="cards">
+      <div class="grid">
         <div class="card">
           <h3>벤처/사업가 사옥</h3>
           <ul>
@@ -321,131 +194,136 @@
         </div>
       </div>
 
-      <div class="btnrow">
+      <div class="actions">
         <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">상담/진단 시작하기 (yugy.store)</a>
-        <!-- ✅ 기존 루트 PDF -->
-        <a class="btn ghost" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF 보기</a>
       </div>
 
-      <div class="note">※ 현장 확인 없이 “하자 단정”은 하지 않습니다. 대신 <b>확인 순서</b>와 <b>기준</b>을 제공합니다.</div>
-    </div>
-  </section>
+      <div class="note">※ 현장 확인 없이 하자 단정은 하지 않습니다. 대신 “확인 순서와 기준”을 제공합니다.</div>
+    </section>
 
-  <!-- 2) 그린리모델링 -->
-  <section id="green">
-    <div class="wrap">
+    <!-- =========================
+         2) 그린리모델링
+         + 유튜브 버튼(1개)
+    ========================== -->
+    <section class="section" id="sec-green">
       <div class="hero">
-        <div class="kicker">에너지 비용은 줄이고, 성능은 올리고</div>
-        <h2 class="title">GREEN REMODELING</h2>
-        <p class="sub">
-          단열/창호/설비/환기 등 ‘돈 새는 구멍’을 먼저 잡고,
-          지원제도·검증자료·공정관리를 한 흐름으로 묶습니다.
+        <div class="kicker">돈 새는 구멍부터 막는 그린리모델링</div>
+        <h1>GREEN REMODELING</h1>
+        <p>
+          성능은 숫자로, 결정은 기준으로.<br/>
+          단열·창호·설비의 “효율/비용/공정”을 한 장으로 정리합니다.
         </p>
       </div>
 
-      <div class="cards">
-        <div class="card">
-          <h3>핵심 접근</h3>
-          <ul>
-            <li>에너지 절감 ‘가능성’부터 빠르게 스크리닝</li>
-            <li>자재 성적서/인증/시공범위 증빙 체크</li>
-            <li>공정 간섭(결로/누수/환기) 리스크 예방</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>산출물 예시</h3>
-          <ul>
-            <li>공사 범위 정의서(말싸움 방지용)</li>
-            <li>예산 프레임(증액 포인트 선제 차단)</li>
-            <li>현장 체크리스트(감리/검수 기준)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>적용 대상</h3>
-          <ul>
-            <li>노후 주택/다가구/다세대</li>
-            <li>소규모 근생/사옥</li>
-            <li>공공/복지시설 리모델링</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="btnrow">
-        <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">에너지/리모델링 진단 신청</a>
-        <a class="btn ghost" href="https://yugy.cloud" target="_blank" rel="noopener">온라인 모델하우스 (yugy.cloud)</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3) BIM -->
-  <section id="bim">
-    <div class="wrap">
-      <div class="hero">
-        <div class="kicker">“도면”을 “결정 가능한 자료”로</div>
-        <h2 class="title">BIM</h2>
-        <p class="sub">
-          BIM은 멋내기용 그림이 아니라, <b>비용·공정·리스크를 눈에 보이게</b> 만드는 도구입니다.<br>
-          아래 샘플은 “추가공사/변경”에서 흔히 터지는 비용 폭탄을 막기 위한 문서 구조 예시예요.
-        </p>
-      </div>
-
-      <!-- ✅ 새로 올린 samples/ PDF 3종 링크 -->
       <div class="grid">
-        <div class="mini">
-          <h4>추가공사(변경) 비용 리스크 체크리스트</h4>
-          <p>증빙요청/검토결과까지 한 장에. “OK/확인필요/별도견적” 판단을 빠르게.</p>
-          <div class="links">
-            <a class="pill" href="samples/sample_add-cost-review.pdf" target="_blank" rel="noopener">보기</a>
-            <a class="pill" href="samples/sample_add-cost-review.pdf" download>다운로드</a>
-          </div>
+        <div class="card">
+          <h3>에너지 비용 절감</h3>
+          <ul>
+            <li>체감되는 난방/냉방비 개선 우선순위</li>
+            <li>공사 항목별 효과/비용 비교</li>
+            <li>지원사업/증빙 흐름 정리</li>
+          </ul>
         </div>
-
-        <div class="mini">
-          <h4>변경내역(실행) 정리 샘플</h4>
-          <p>계약수량 vs 실행수량/증감/변경사유를 정리해 분쟁 포인트를 선제 차단.</p>
-          <div class="links">
-            <a class="pill" href="samples/sample_change-cost-review.pdf" target="_blank" rel="noopener">보기</a>
-            <a class="pill" href="samples/sample_change-cost-review.pdf" download>다운로드</a>
-          </div>
+        <div class="card">
+          <h3>리스크 줄이는 공정 설계</h3>
+          <ul>
+            <li>공정 간섭 최소화(민원/안전/동선)</li>
+            <li>변경 가능성 높은 구간 선제 관리</li>
+            <li>검수 포인트 체크리스트 제공</li>
+          </ul>
         </div>
-
-        <div class="mini">
-          <h4>공정표(계획 vs 실적) 샘플</h4>
-          <p>늦어지는 이유가 “누구 탓”이 아니라 “공정 간섭”으로 보이게.</p>
-          <div class="links">
-            <a class="pill" href="samples/sample_schedule-plan-act.pdf" target="_blank" rel="noopener">보기</a>
-            <a class="pill" href="samples/sample_schedule-plan-act.pdf" download>다운로드</a>
-          </div>
+        <div class="card">
+          <h3>운영 관점까지</h3>
+          <ul>
+            <li>유지관리/교체주기 고려</li>
+            <li>실사용자 관점 동선/쾌적성</li>
+            <li>“나중에 바뀌는 비용” 예방</li>
+          </ul>
         </div>
       </div>
 
-      <div class="btnrow" style="margin-top:22px;">
-        <a class="btn ghost" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF (기존)</a>
+      <div class="actions">
+        <a class="btn primary" href="https://yugy.store" target="_blank" rel="noopener">진단 신청하기 (yugy.store)</a>
+        <!-- ✅ 여기만 유튜브 링크 바꾸면 됨 -->
+        <a class="btn youtube" id="yt-green" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
       </div>
 
-      <div class="note">※ 샘플에는 “SAMPLE / DO NOT USE” 워터마크를 유지하는 걸 추천해요. (자료 무단 사용 방지)</div>
-    </div>
-  </section>
+      <div class="note">※ 유튜브는 “설명”이 아니라 “작동 방식”을 보여주는 용도로 버튼 하나만 두는 걸 추천해요.</div>
+    </section>
 
-  <!-- 4) 메타버스 -->
-  <section id="metaverse">
-    <div class="wrap">
+    <!-- =========================
+         3) BIM
+         + 유튜브 버튼(1개)
+         + PDF 4개(기존 1 + 샘플 3)
+    ========================== -->
+    <section class="section" id="sec-bim">
+      <div class="hero">
+        <div class="kicker">불안과 리스크를 “표”로 잠재우는 BIM</div>
+        <h1>BIM</h1>
+        <p>
+          “예쁘게 그린 3D”가 아니라,<br/>
+          비용·공정·변경을 통제하는 도구로 BIM을 씁니다.
+        </p>
+      </div>
+
+      <div class="actions">
+        <!-- ✅ 기존 파일(레포 루트) -->
+        <a class="btn primary" href="BIM_portfolio.pdf" target="_blank" rel="noopener">BIM 포트폴리오 PDF (기존)</a>
+
+        <!-- ✅ BIM 탭 유튜브 버튼 -->
+        <a class="btn youtube" id="yt-bim" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
+      </div>
+
+      <div class="note">* 샘플에는 “SAMPLE / DO NOT USE” 워터마크 유지 추천(자료 무단 사용 방지)</div>
+
+      <div class="split">
+        <div class="pdfBox">
+          <div class="pdfTitle">추가공사(변경) 비용 리스크 체크리스트 (샘플)</div>
+          <div class="pdfBtns">
+            <a class="btn small" href="samples/sample_add-cost-review.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="btn small" href="samples/sample_add-cost-review.pdf" download>다운로드</a>
+          </div>
+        </div>
+
+        <div class="pdfBox">
+          <div class="pdfTitle">공사 실행내역정리 (샘플)</div>
+          <div class="pdfBtns">
+            <a class="btn small" href="samples/sample_change-cost-review.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="btn small" href="samples/sample_change-cost-review.pdf" download>다운로드</a>
+          </div>
+        </div>
+
+        <div class="pdfBox">
+          <div class="pdfTitle">공정표(계획/실행) (샘플)</div>
+          <div class="pdfBtns">
+            <a class="btn small" href="samples/sample_schedule-plan-act.pdf" target="_blank" rel="noopener">보기</a>
+            <a class="btn small" href="samples/sample_schedule-plan-act.pdf" download>다운로드</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         4) 메타버스
+         + 유튜브 버튼(1개)
+    ========================== -->
+    <section class="section" id="sec-meta">
       <div class="hero">
         <div class="kicker">설명으로 끝내지 않고, “미리 경험”</div>
-        <h2 class="title">METAVERSE</h2>
-        <p class="sub">
-          선택은 빠르게, 후회는 줄이게.<br>
-          공간을 디지털로 먼저 경험하고, 결정 기준을 공유하는 방식입니다.
+        <h1>METAVERSE</h1>
+        <p>
+          선택은 빠르게, 후회는 줄이게.<br/>
+          공간을 디지털로 먼저 경험하고, 결정 기준을 공유합니다.
         </p>
       </div>
 
-      <div class="cards">
+      <div class="grid">
         <div class="card">
           <h3>고객이 얻는 것</h3>
           <ul>
             <li>시공 전에 공간/동선/채광을 미리 확인</li>
             <li>의사결정 포인트를 가족/동업자와 공유</li>
-            <li>“나중에 바꿀게요”로 생기는 비용 증가 예방</li>
+            <li>“나중에 바꿀게요” 비용 증가 예방</li>
           </ul>
         </div>
         <div class="card">
@@ -459,57 +337,58 @@
         <div class="card">
           <h3>연결</h3>
           <ul>
-            <li>BIM → 공정/비용 기준</li>
+            <li>BIM → 공정/비용/기준</li>
             <li>메타버스 → 체험/의사결정</li>
             <li>그린리모델링 → 성능/운영비 절감</li>
           </ul>
         </div>
       </div>
 
-      <div class="btnrow">
+      <div class="actions">
         <a class="btn primary" href="https://yugy.cloud" target="_blank" rel="noopener">메타버스/디지털트윈 보기 (yugy.cloud)</a>
+        <a class="btn youtube" id="yt-meta" href="#" target="_blank" rel="noopener">유튜브 동영상</a>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
 
-<footer>
-  <div class="wrap">
-    <div class="footlinks">
-      <a href="https://yugy.cloud" target="_blank" rel="noopener">🧊 yugy.cloud</a>
-      <a href="https://yugy.site" target="_blank" rel="noopener">📘 도면소생술 yugy.site</a>
-      <a href="https://yugy.store" target="_blank" rel="noopener">🛒 yugy.store</a>
-      <a href="https://smartstore.naver.com/" target="_blank" rel="noopener">🟩 스마트스토어</a>
-    </div>
+    <footer>
+      <div>© Here Architectural Office</div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="https://yugy.cloud" target="_blank" rel="noopener">yugy.cloud</a>
+        <a href="https://yugy.site" target="_blank" rel="noopener">yugy.site</a>
+        <a href="https://yugy.store" target="_blank" rel="noopener">yugy.store</a>
+      </div>
+    </footer>
   </div>
-</footer>
 
-<script>
-  // ✅ 스크롤 위치에 따라 상단 탭 활성화
-  const navLinks = [...document.querySelectorAll("nav a")];
-  const sections = navLinks.map(a => document.querySelector(a.getAttribute("href")));
+  <script>
+    /* =========================
+       ✅ 유튜브 링크 3개만 여기 넣어줘!
+       (기존에 2/3/4 탭에 있던 링크 그대로 복붙)
+    ========================== */
+    const YT_GREEN = "https://www.youtube.com/"; // 2. 그린리모델링 유튜브 링크
+    const YT_BIM   = "https://www.youtube.com/"; // 3. BIM 유튜브 링크
+    const YT_META  = "https://www.youtube.com/"; // 4. 메타버스 유튜브 링크
 
-  const setActive = (id) => {
-    navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
-  };
+    // 버튼에 링크 세팅
+    document.getElementById("embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0").href = YT_GREEN;
+    document.getElementById("embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0").href   = YT_BIM;
+    document.getElementById("embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0").href  = YT_META;
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) setActive(e.target.id);
+    // 탭 동작
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
+    tabs.forEach(t => {
+      t.addEventListener("click", () => {
+        tabs.forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+
+        const id = t.dataset.target;
+        sections.forEach(s => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     });
-  }, { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 });
-
-  sections.forEach(s => s && io.observe(s));
-
-  // ✅ 부드러운 스크롤
-  navLinks.forEach(a => {
-    a.addEventListener("click", (ev) => {
-      ev.preventDefault();
-      const target = document.querySelector(a.getAttribute("href"));
-      if(!target) return;
-      target.scrollIntoView({ behavior:"smooth", block:"start" });
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
