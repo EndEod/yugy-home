@@ -2,614 +2,1141 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YUGY Design Group Architects</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+KR:wght@300;400;600&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>YUGY DESIGN GROUP | 공공형 Space Auditor</title>
+  <meta name="description" content="YUGY DESIGN GROUP은 3D Scan 실측, 수치화, BIM 기반 평면도·입면도·단면도 작성으로 노후주택의 주택관리도면 구축을 돕습니다." />
+  <meta name="keywords" content="YUGY DESIGN GROUP, 여기건축사사무소, 스페이스 오디터, Space Auditor, 노후주택, 주택관리도면, BIM, 3D Scan, 건축물대장 현황도면, 서대문구" />
+
+  <meta property="og:title" content="YUGY DESIGN GROUP | 공공형 Space Auditor" />
+  <meta property="og:description" content="도면 없는 노후주택을 읽을 수 있는 집으로. 3D Scan 실측, 수치화, BIM 기반 주택관리도면 구축 서비스." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yugy.org" />
+  <meta property="og:image" content="https://yugy.org/assets/bim-plan-example.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- GA4: yugy.org -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXEF0EWWVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-TXEF0EWWVB");
+  </script>
 
   <style>
-    /* [디자인 시스템: Architectural Modern] */
     :root {
-      /* 컬러 팔레트: 차분한 스톤 그레이 & 딥 포레스트 그린 */
-      --bg: #F5F5F4; /* 웜 그레이 배경 */
-      --surface: #FFFFFF;
-      --text-main: #1C1917; /* 거의 검정에 가까운 다크 그레이 */
-      --text-sub: #57534E;
-      --accent: #2F5D62; /* 고급스러운 딥 그린 */
-      --accent-hover: #1e3d40;
-      --border: rgba(0, 0, 0, 0.06);
-      --shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
-      --glass: rgba(255, 255, 255, 0.85);
+      --bg: #f5f2ec;
+      --surface: #ffffff;
+      --surface-2: #fbfaf7;
+      --ink: #1d1b16;
+      --muted: #625f57;
+      --soft: #8a857b;
+      --line: rgba(29, 27, 22, 0.12);
+      --line-strong: rgba(29, 27, 22, 0.22);
+      --accent: #7b3f2f;
+      --accent-2: #294f54;
+      --accent-3: #b99062;
+      --deep: #13110e;
+      --shadow: 0 24px 70px rgba(29, 27, 22, 0.10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max: 1180px;
     }
 
-    * { box-sizing: border-box; }
-    
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: 'Noto Sans KR', sans-serif;
-      color: var(--text-main);
-      background-color: var(--bg);
-      line-height: 1.7;
+      font-family: "Noto Sans KR", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(185, 144, 98, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(41, 79, 84, 0.14), transparent 30%),
+        var(--bg);
+      line-height: 1.72;
       word-break: keep-all;
     }
 
-    a { text-decoration: none; color: inherit; transition: color 0.3s; }
-    
-    /* 레이아웃 */
-    .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px 100px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    /* 헤더: 스티키 & 글래스모피즘 */
-    header {
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 20;
+      background: rgba(245, 242, 236, 0.86);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 0;
-      margin-bottom: 40px;
-      background: rgba(245, 245, 244, 0.9); /* 배경색과 동일한 톤의 반투명 */
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      gap: 24px;
     }
 
     .brand {
-      font-family: 'Cinzel', 'Noto Serif KR', serif; /* 영문은 Cinzel, 한글은 명조 */
-      font-size: 20px;
-      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
       letter-spacing: -0.02em;
-      color: var(--text-main);
     }
 
-    /* 네비게이션 탭 */
+    .brand strong {
+      font-family: "Cinzel", "Noto Serif KR", serif;
+      font-size: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .brand span {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
     .nav {
       display: flex;
+      align-items: center;
       gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
     }
 
-    .tab {
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 500;
-      color: #A8A29E;
-      border-radius: 20px;
-      transition: all 0.3s ease;
+    .nav a {
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: 0.2s ease;
     }
 
-    .tab:hover { color: var(--text-main); }
-    
-    .tab.active {
-      color: var(--surface);
-      background-color: var(--text-main); /* 선택되면 반전 컬러 */
-      font-weight: 600;
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
     }
 
-    .tab strong { display: none; } /* 번호 숨김 (더 깔끔하게) */
-
-    /* 섹션 전환 애니메이션 */
-    .section { display: none; opacity: 0; transform: translateY(20px); }
-    .section.active {
-      display: block;
-      animation: fadeUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-    }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 히어로 섹션 */
     .hero {
-      text-align: center;
-      padding: 60px 0 50px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .hero .kicker {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-      display: inline-block;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 4px;
-    }
-
-    .hero h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 48px;
-      font-weight: 500;
-      margin: 0 0 24px;
-      color: var(--text-main);
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 17px;
-      color: var(--text-sub);
-      font-weight: 300;
-      line-height: 1.8;
-    }
-
-    /* 그리드 & 카드 */
-    .grid {
+      padding: 86px 0 60px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 20px;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 56px;
+      align-items: center;
     }
 
-    .card {
-      background: var(--surface);
-      padding: 32px 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--accent-2);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px -10px rgba(0,0,0,0.12);
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-3);
+      box-shadow: 0 0 0 6px rgba(185, 144, 98, 0.14);
     }
 
-    .card h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 20px;
-      margin: 0 0 16px;
-      color: var(--text-main);
+    h1 {
+      margin: 22px 0 22px;
+      font-family: "Noto Serif KR", serif;
+      font-size: clamp(38px, 5.7vw, 74px);
+      line-height: 1.06;
+      letter-spacing: -0.07em;
     }
 
-    .card ul {
+    .hero-lead {
+      max-width: 660px;
+      font-size: 19px;
+      color: var(--muted);
       margin: 0;
-      padding-left: 20px;
-      color: var(--text-sub);
-      font-size: 15px;
     }
 
-    .card li { margin-bottom: 8px; }
+    .hero-lead strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
 
-    /* 버튼 스타일 */
-    .actions {
+    .hero-actions {
       display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 50px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      padding: 14px 28px;
-      border-radius: 4px; /* 사각형에 가까운 모던함 */
-      font-weight: 600;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      font-weight: 800;
       font-size: 15px;
-      transition: all 0.3s;
       border: 1px solid transparent;
+      transition: 0.2s ease;
       cursor: pointer;
     }
 
     .btn.primary {
-      background-color: var(--accent);
-      color: white;
-      box-shadow: 0 4px 12px rgba(47, 93, 98, 0.3);
+      background: var(--deep);
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(29, 27, 22, 0.18);
     }
 
     .btn.primary:hover {
-      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(29, 27, 22, 0.24);
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .btn.secondary:hover {
+      background: #fff;
+      border-color: var(--line-strong);
       transform: translateY(-2px);
     }
 
-    .btn.youtube { /* 아웃라인 스타일 */
-      background-color: transparent;
-      border: 1px solid #D6D3D1;
-      color: var(--text-sub);
+    .hero-visual {
+      position: relative;
     }
 
-    .btn.youtube:hover {
-      border-color: var(--text-main);
-      color: var(--text-main);
-      background-color: #fff;
+    .visual-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
-    .btn.small {
-      padding: 8px 16px;
-      font-size: 13px;
-      border: 1px solid #E7E5E4;
-      background: white;
-      color: var(--text-sub);
-    }
-    
-    .btn.small:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    .visual-card img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #eee;
     }
 
-    .note {
-      text-align: center;
-      font-size: 13px;
-      color: #A8A29E;
-      margin-top: 20px;
-      font-style: italic;
+    .visual-caption {
+      padding: 18px 20px 20px;
+      border-top: 1px solid var(--line);
     }
 
-    /* PDF 박스 영역 */
-    .split {
+    .visual-caption strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .visual-caption span {
+      display: block;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .floating-note {
+      position: absolute;
+      left: -26px;
+      bottom: 34px;
+      max-width: 240px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(19, 17, 14, 0.92);
+      color: #fff;
+      box-shadow: 0 20px 50px rgba(19, 17, 14, 0.25);
+      font-size: 14px;
+    }
+
+    .floating-note strong {
+      color: #f6d6a8;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-head {
       display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 40px;
+      justify-content: space-between;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 28px;
     }
 
-    .pdfBox {
-      flex: 1;
-      min-width: 280px;
-      background: white;
-      border: 1px solid var(--border);
-      padding: 24px;
-      border-radius: 8px;
+    .kicker {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Noto Serif KR", serif;
+      font-size: clamp(30px, 3.4vw, 48px);
+      line-height: 1.22;
+      letter-spacing: -0.05em;
+    }
+
+    .section-desc {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel.dark {
+      background: var(--deep);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: 0 14px 40px rgba(29, 27, 22, 0.06);
+    }
+
+    .card .num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(123, 63, 47, 0.10);
+      color: var(--accent);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 21px;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .quote-panel {
+      padding: 42px;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .quote-big {
+      font-family: "Noto Serif KR", serif;
+      font-size: clamp(28px, 3.7vw, 48px);
+      line-height: 1.24;
+      letter-spacing: -0.055em;
+      margin: 0;
+    }
+
+    .quote-text {
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 22px 18px;
+      min-height: 190px;
+    }
+
+    .step b {
+      display: block;
+      color: var(--accent-2);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .step strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.34;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .step span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(29, 27, 22, 0.07);
+    }
+
+    .gallery img {
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #ece9e2;
+    }
+
+    .gallery .wide {
+      grid-column: span 2;
+    }
+
+    figcaption {
+      padding: 16px 18px 18px;
+    }
+
+    figcaption strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    figcaption span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .deliverables {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .list-card {
+      padding: 30px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .list-card h3 {
+      margin: 0 0 16px;
+      font-size: 22px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 24px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-3);
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: var(--radius-sm);
+      background: rgba(41, 79, 84, 0.08);
+      color: var(--accent-2);
+      font-size: 14px;
+      border: 1px solid rgba(41, 79, 84, 0.12);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .link-card {
+      min-height: 210px;
+      padding: 28px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      transition: 0.2s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: 0.3s;
     }
-    
-    .pdfBox:hover { border-color: var(--accent); }
 
-    .pdfTitle {
-      font-weight: 700;
-      margin-bottom: 16px;
+    .link-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(29, 27, 22, 0.10);
+      border-color: var(--line-strong);
+    }
+
+    .link-card h3 {
+      margin: 0 0 10px;
+      font-size: 23px;
+    }
+
+    .link-card p {
+      margin: 0;
+      color: var(--muted);
       font-size: 15px;
-      color: var(--text-main);
     }
 
-    /* 푸터 */
+    .link-card .go {
+      margin-top: 22px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .cta {
+      padding: 46px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, rgba(123, 63, 47, 0.94), rgba(41, 79, 84, 0.96)),
+        var(--deep);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      color: #fff;
+    }
+
+    .cta p {
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 17px;
+    }
+
+    .contact-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .contact-box a {
+      display: block;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .contact-box a:last-child {
+      border-bottom: 0;
+    }
+
+    .contact-box small {
+      display: block;
+      margin-top: 14px;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.7;
+    }
+
     footer {
-      margin-top: 80px;
-      padding-top: 40px;
-      border-top: 1px solid #E7E5E4;
-      display: flex;
-      justify-content: space-between;
-      color: #A8A29E;
+      margin-top: 86px;
+      padding: 34px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
       font-size: 14px;
     }
-    
-    footer a:hover { color: var(--accent); text-decoration: underline; }
 
-    /* 반응형 */
-    @media (max-width: 980px){
-      .grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 32px; }
-      .nav { display: none; } /* 모바일에서는 탭 대신 다른 UI가 필요할 수 있으나 일단 숨김 처리하거나 스크롤로 변경 */
-      
-      /* 모바일용 가로 스크롤 탭 */
-      .nav { 
-        display: flex; 
-        overflow-x: auto; 
-        padding-bottom: 10px; 
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 16px 0;
+        align-items: flex-start;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+        padding: 0 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .mobile-menu a {
+        white-space: nowrap;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid var(--line);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 54px;
+        gap: 28px;
+      }
+
+      .floating-note {
+        position: static;
+        max-width: none;
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-desc {
+        margin-top: 14px;
+        max-width: none;
+      }
+
+      .cards-3,
+      .links-grid,
+      .deliverables,
+      .cta,
+      .quote-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery .wide {
+        grid-column: span 1;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap,
+      .topbar-inner,
+      .mobile-menu {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .btn {
         width: 100%;
       }
-      .tab { white-space: nowrap; }
-    }
 
-    /* 유튜브 모달 (디자인 강화) */
-    .ytModal {
-      position: fixed; inset: 0;
-      display: none;
-      align-items: center; justify-content: center;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(5px);
-      z-index: 1000;
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .ytModal.show { display: flex; opacity: 1; }
-    
-    .ytCard {
-      width: min(1000px, 90vw);
-      background: black;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-    
-    .ytTop {
-      display: flex; justify-content: space-between;
-      padding: 16px 24px;
-      background: #111;
-      color: white;
-    }
-    
-    .ytClose {
-      background: none; border: none;
-      color: #999; font-size: 24px; cursor: pointer;
-      padding: 0;
-    }
-    .ytClose:hover { color: white; }
+      .quote-panel,
+      .cta {
+        padding: 28px;
+      }
 
-    .ytFrameWrap { position: relative; width: 100%; aspect-ratio: 16/9; }
-    .ytFrameWrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+      .brand strong {
+        font-size: 17px;
+      }
+
+      .brand span {
+        font-size: 11px;
+      }
+    }
   </style>
 </head>
-<body>
 
-<div class="wrap">
-  <header>
-    <div class="brand">YUGY Design Group Architects</div> <nav class="nav" id="tabs">
-      <div class="tab active" data-target="sec-work">WORK</div>
-      <div class="tab" data-target="sec-green">GREEN REMODELING</div>
-      <div class="tab" data-target="sec-bim">BIM</div>
-      <div class="tab" data-target="sec-meta">METAVERSE</div>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="YUGY DESIGN GROUP 홈으로 이동">
+        <strong>YUGY DESIGN GROUP</strong>
+        <span>㈜여기건축사사무소</span>
+      </a>
+
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#public-space-auditor">공공형 Space Auditor</a>
+        <a href="#workflow">진행 방식</a>
+        <a href="#examples">예시 도면</a>
+        <a href="#deliverables">성과물</a>
+        <a href="#links">서비스 연결</a>
+        <a href="#contact">문의</a>
+      </nav>
+    </div>
+
+    <nav class="mobile-menu" aria-label="모바일 주요 메뉴">
+      <a href="#public-space-auditor">공공형 Space Auditor</a>
+      <a href="#workflow">진행 방식</a>
+      <a href="#examples">예시 도면</a>
+      <a href="#deliverables">성과물</a>
+      <a href="#links">서비스 연결</a>
+      <a href="#contact">문의</a>
     </nav>
   </header>
 
-  <section class="section active" id="sec-work">
-    <div class="hero">
-      <div class="kicker">Process & Standard</div>
-      <h1>WHAT WE DO</h1>
-      <p>
-        점잖은 건축은 <strong>'말'</strong>보다 <strong>'기준'</strong>으로 움직입니다.<br>
-        비용, 일정, 민원 리스크를 데이터로 정리하여 최적의 의사결정을 돕습니다.
-      </p>
-    </div>
+  <main id="top">
+    <div class="wrap">
+      <section class="hero" aria-label="메인 소개">
+        <div>
+          <div class="eyebrow">3D Scan · BIM · Public Space Auditor</div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>벤처 · 사옥</h3>
-        <ul>
-          <li>업무 중단 최소화 공정 설계</li>
-          <li>브랜드 경험을 담은 공간 기획</li>
-          <li>예산·일정의 투명한 문서화</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>공공기관 리모델링</h3>
-        <ul>
-          <li>예산 및 감사 대응 시스템</li>
-          <li>준공 도서의 체계적 관리</li>
-          <li>복잡한 민원 리스크 선제 대응</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>수익형 부동산</h3>
-        <ul>
-          <li>임대 수익을 고려한 공사 계획</li>
-          <li>추가 공사비(Change Order) 방지</li>
-          <li>현장 변수에 따른 즉각적 대안</li>
-        </ul>
-      </div>
-    </div>
+          <h1>
+            도면 없는 노후주택을<br />
+            읽을 수 있는 집으로.
+          </h1>
 
-    <div class="actions">
-      <a class="btn primary" href="https://yugy.store" target="_blank">건축 상담/진단 시작하기</a>
-      <a class="btn youtube" href="samples/sample_change-cost-review.pdf" target="_blank">비용 정산 예시</a>
-    </div>
-    <div class="note">※ 우리는 현장 확인 없는 무책임한 진단을 하지 않습니다.</div>
-  </section>
+          <p class="hero-lead">
+            YUGY DESIGN GROUP은 30년 이상 된 노후 단독주택, 다가구주택, 다세대주택의 현재 상태를
+            <strong>3D Scan으로 실측하고, 수치화하고, BIM 기반 평면도·입면도·단면도</strong>로 정리합니다.
+            주민에게는 내 집을 이해하는 자료를, 지자체에는 노후주택 관리의 기초자료를 제공합니다.
+          </p>
 
-  <section class="section" id="sec-green">
-    <div class="hero">
-      <div class="kicker">Efficiency</div>
-      <h1>GREEN REMODELING</h1>
-      <p>
-        성능은 숫자로 증명되어야 합니다.<br>
-        단열, 창호, 설비의 효율과 비용을 한 장의 보고서로 정리해 드립니다.
-      </p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>에너지 비용 절감</h3>
-        <ul>
-          <li>냉난방비 개선 우선순위 분석</li>
-          <li>공사 항목별 ROI(투자대비효과) 산출</li>
-          <li>정부 지원사업 서류 완벽 대응</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>리스크 매니지먼트</h3>
-        <ul>
-          <li>거주 중 공사 시 간섭 최소화</li>
-          <li>안전 사고 및 민원 예방 솔루션</li>
-          <li>단계별 검수 체크리스트 제공</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>생애주기 관리</h3>
-        <ul>
-          <li>유지관리 및 교체 주기 최적화</li>
-          <li>실사용자 중심의 쾌적성 확보</li>
-          <li>장기적 운영 비용(OPEX) 절감</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="actions">
-      <a class="btn primary" href="https://yugy.store" target="_blank">진단 신청하기</a>
-      <button class="btn youtube" id="yt-green">▶ 소개 영상 보기</button>
-    </div>
-  </section>
-
-  <section class="section" id="sec-bim">
-    <div class="hero">
-      <div class="kicker">Digital Construction</div>
-      <h1>BIM SOLUTIONS</h1>
-      <p>
-        단순한 3D 모델링이 아닙니다.<br>
-        도면의 오류를 잡고, 보이지 않는 비용을 찾아내는 '시공 시뮬레이션'입니다.
-      </p>
-    </div>
-
-    <div class="actions">
-      <a class="btn primary" href="BIM_portfolio.pdf" target="_blank">BIM 포트폴리오 다운로드</a>
-      <button class="btn youtube" id="yt-bim">▶ 시연 영상 보기</button>
-    </div>
-
-    <div class="split">
-      <div class="pdfBox">
-        <div class="pdfTitle">비용 리스크 체크리스트</div>
-        <div style="display:flex; gap:8px;">
-           <a class="btn small" href="samples/sample_add-cost-review.pdf" target="_blank">미리보기</a>
-           <a class="btn small" href="samples/sample_add-cost-review.pdf" download>다운로드</a>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">공공형 서비스 문의하기</a>
+            <a class="btn secondary" href="https://space-auditor.com" target="_blank" rel="noopener">Space Auditor 보기</a>
+            <a class="btn secondary" href="https://yugy.site" target="_blank" rel="noopener">도면소생술 보기</a>
+          </div>
         </div>
-      </div>
 
-      <div class="pdfBox">
-        <div class="pdfTitle">준공금 정산서 표준안</div>
-        <div style="display:flex; gap:8px;">
-           <a class="btn small" href="samples/sample_change-cost-review.pdf" target="_blank">미리보기</a>
-           <a class="btn small" href="samples/sample_change-cost-review.pdf" download>다운로드</a>
+        <div class="hero-visual">
+          <div class="visual-card">
+            <img src="assets/3d-scan-measure.jpg" alt="3D Scan 실측 예시 화면" />
+            <div class="visual-caption">
+              <strong>3D Scan 실측 예시</strong>
+              <span>현장의 공간 형태와 주요 치수를 먼저 읽습니다.</span>
+            </div>
+          </div>
+
+          <div class="floating-note">
+            <strong>공사보다 먼저 필요한 것.</strong><br />
+            지금 이 집이 어떤 상태인지 확인할 수 있는 주택관리도면입니다.
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="pdfBox">
-        <div class="pdfTitle">실행 공정표 샘플</div>
-        <div style="display:flex; gap:8px;">
-           <a class="btn small" href="samples/sample_schedule-plan-act.pdf" target="_blank">미리보기</a>
-           <a class="btn small" href="samples/sample_schedule-plan-act.pdf" download>다운로드</a>
+      <section id="public-space-auditor" aria-label="공공형 Space Auditor 소개">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Public Space Auditor</div>
+            <h2>서대문구에서 시작할 수 있는<br />주거복지형 건축 서비스</h2>
+          </div>
+          <p class="section-desc">
+            자락길이 주민의 여가복지 접근성을 넓힌 사업이었다면, 공공형 Space Auditor는 노후주택 주민이
+            자기 집을 이해하고 관리할 수 있도록 돕는 주거복지 인프라입니다.
+          </p>
         </div>
-      </div>
+
+        <div class="panel dark">
+          <div class="quote-panel">
+            <p class="quote-big">
+              산으로 가는 길을 열었던 도시가,<br />
+              이제는 내 집을 이해하는 길을 열 수 있습니다.
+            </p>
+            <p class="quote-text">
+              많은 노후주택은 실제 거주가 계속되고 있지만, 현재 상태를 확인할 수 있는 도면이 없거나 오래된 자료에 머물러 있습니다.
+              집수리, 에너지 개선, 건축물대장 현황도면 정비, 향후 유지관리를 위해서는 먼저 집을 읽을 수 있는 기본 자료가 필요합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="핵심 서비스">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Core Work</div>
+            <h2>3D Scan에서 BIM 도면까지</h2>
+          </div>
+          <p class="section-desc">
+            단순한 사진 기록이 아니라, 현장을 수치화하고 도면화하여 주민과 행정이 함께 활용할 수 있는 형태로 정리합니다.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card">
+            <span class="num">1</span>
+            <h3>3D Scan 실측</h3>
+            <p>
+              현장에서 공간의 형태, 주요 치수, 방 구성, 벽체 흐름을 확인합니다.
+              현장 여건에 따라 추가 실측과 사진 기록을 함께 진행합니다.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="num">2</span>
+            <h3>현황 수치화</h3>
+            <p>
+              스캔 자료와 실측 내용을 바탕으로 공간의 크기와 관계를 정리합니다.
+              막연한 집수리 상담을 수치 기반의 판단으로 옮기는 단계입니다.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="num">3</span>
+            <h3>BIM 도면화</h3>
+            <p>
+              BIM 기반으로 평면도, 입면도, 단면도 등 주택관리도면을 작성합니다.
+              지자체와 협의하여 건축물대장 현황도면 정비 업무에 활용 가능한 자료로 정리합니다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="workflow" aria-label="진행 방식">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Workflow</div>
+            <h2>공공형 서비스 진행 방식</h2>
+          </div>
+          <p class="section-desc">
+            실제 사업 범위와 제출 방식은 지자체 기준과 대상 주택의 상태에 따라 협의합니다.
+          </p>
+        </div>
+
+        <div class="process">
+          <div class="step">
+            <b>STEP 01</b>
+            <strong>대상 주택 선정</strong>
+            <span>지자체 협의, 신청 접수, 대상 주택 기준 정리</span>
+          </div>
+
+          <div class="step">
+            <b>STEP 02</b>
+            <strong>기초자료 확인</strong>
+            <span>건축물대장, 기존 도면, 현장조사 가능 여부 확인</span>
+          </div>
+
+          <div class="step">
+            <b>STEP 03</b>
+            <strong>3D Scan 및 실측</strong>
+            <span>현장 방문, 공간 스캔, 주요 치수와 상태 기록</span>
+          </div>
+
+          <div class="step">
+            <b>STEP 04</b>
+            <strong>BIM 기반 도면 작성</strong>
+            <span>평면도, 입면도, 단면도 중심의 주택관리도면 작성</span>
+          </div>
+
+          <div class="step">
+            <b>STEP 05</b>
+            <strong>성과물 제출</strong>
+            <span>주민 제공 자료와 지자체 활용 자료를 구분하여 정리</span>
+          </div>
+        </div>
+
+        <div class="notice">
+          ※ 본 서비스는 노후주택의 현황 파악과 주택관리도면 구축을 위한 서비스입니다.
+          위반건축물 적법화, 구조안전진단, 정밀측량, 허가·신고 설계, 공사비 확정 견적은 별도 업무로 구분됩니다.
+        </div>
+      </section>
+
+      <section id="examples" aria-label="예시 자료">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Examples</div>
+            <h2>예시 자료</h2>
+          </div>
+          <p class="section-desc">
+            아래 이미지는 서비스의 이해를 돕기 위한 예시입니다. 실제 성과물의 범위와 표현 방식은 대상 주택과 사업 기준에 따라 달라질 수 있습니다.
+          </p>
+        </div>
+
+        <div class="gallery">
+          <figure>
+            <img src="assets/3d-scan-measure.jpg" alt="3D Scan 실측 예시" />
+            <figcaption>
+              <strong>3D Scan 실측</strong>
+              <span>현장에서 공간의 형태와 주요 치수를 확인하는 단계</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="assets/3d-scan-quantified.jpg" alt="3D Scan 수치화 예시" />
+            <figcaption>
+              <strong>3D Scan 수치화</strong>
+              <span>스캔 자료를 바탕으로 공간 크기와 관계를 수치로 정리</span>
+            </figcaption>
+          </figure>
+
+          <figure class="wide">
+            <img src="assets/bim-plan-example.png" alt="BIM 평면도 예시" />
+            <figcaption>
+              <strong>BIM 평면도 예시</strong>
+              <span>층별 공간 구성, 벽체, 출입구, 계단, 주요 치수를 도면으로 정리</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="assets/bim-elevation-example.png" alt="BIM 입면도 예시" />
+            <figcaption>
+              <strong>BIM 입면도 예시</strong>
+              <span>건축물 외관, 층별 높이, 창호 위치 등을 확인할 수 있는 도면</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="assets/bim-section-example.png" alt="BIM 단면도 예시" />
+            <figcaption>
+              <strong>BIM 단면도 예시</strong>
+              <span>층고, 지붕, 계단, 내부 구조 흐름을 이해하기 위한 도면</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="deliverables" aria-label="성과물">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Deliverables</div>
+            <h2>주민과 지자체가 함께 쓰는 자료</h2>
+          </div>
+          <p class="section-desc">
+            주민에게는 내 집을 이해하는 도면을, 지자체에는 노후주택 관리와 집수리 정책에 활용 가능한 기초자료를 제공합니다.
+          </p>
+        </div>
+
+        <div class="deliverables">
+          <div class="list-card">
+            <h3>주민 제공 자료</h3>
+            <ul class="list">
+              <li>주택관리도면 PDF</li>
+              <li>층별 평면도</li>
+              <li>주요 입면도</li>
+              <li>주요 단면도</li>
+              <li>공간 및 면적 요약</li>
+              <li>집수리·그린리모델링 사전 검토용 기본 자료</li>
+            </ul>
+          </div>
+
+          <div class="list-card">
+            <h3>지자체 활용 자료</h3>
+            <ul class="list">
+              <li>대상 주택별 현황 요약</li>
+              <li>도면 보유 여부 및 현황 차이 검토 자료</li>
+              <li>노후주택 관리 기초자료</li>
+              <li>집수리·에너지 개선 연계 가능 항목 정리</li>
+              <li>건축물대장 현황도면 정비 업무에 활용 가능한 자료</li>
+              <li>추후 공공형 서비스 확장을 위한 표준 프로세스 자료</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="notice">
+          ※ 건축물대장 현황도면 정비 및 세움터 관련 제출 방식은 담당 지자체의 업무 기준에 따라 협의합니다.
+          본 페이지는 서비스 제안과 이해를 위한 안내이며, 특정 행정처리 결과를 보장하지 않습니다.
+        </div>
+      </section>
+
+      <section id="links" aria-label="서비스 연결">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Connected Services</div>
+            <h2>YUGY 서비스 연결</h2>
+          </div>
+          <p class="section-desc">
+            공공형 Space Auditor는 도면소생술, 스페이스 오디터, 온라인 모델하우스와 연결되어 더 넓은 주택관리 흐름으로 확장됩니다.
+          </p>
+        </div>
+
+        <div class="links-grid">
+          <a class="link-card" href="https://yugy.site" target="_blank" rel="noopener">
+            <div>
+              <h3>도면소생술</h3>
+              <p>도면이 없는 집을 이해하기 위한 2D·3D 개념도 실험실입니다.</p>
+            </div>
+            <span class="go">yugy.site 바로가기</span>
+          </a>
+
+          <a class="link-card" href="https://space-auditor.com" target="_blank" rel="noopener">
+            <div>
+              <h3>Space Auditor</h3>
+              <p>설계와 공사 전에 리스크, 순서, 예산의 큰 그림을 먼저 정리하는 사전진단 서비스입니다.</p>
+            </div>
+            <span class="go">space-auditor.com 바로가기</span>
+          </a>
+
+          <a class="link-card" href="https://yugy.cloud" target="_blank" rel="noopener">
+            <div>
+              <h3>Online Model House</h3>
+              <p>완성 전 공간을 미리 경험하고 의사결정을 돕는 온라인 모델하우스 서비스입니다.</p>
+            </div>
+            <span class="go">yugy.cloud 바로가기</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="contact" aria-label="문의">
+        <div class="cta">
+          <div>
+            <div class="kicker" style="color:#f6d6a8;">Contact</div>
+            <h2>노후주택 관리도면 구축을<br />공공형 서비스로 시작하고 싶다면</h2>
+            <p>
+              지자체 시범사업, 주민 대상 주택관리도면 구축, 3D Scan 실측 및 BIM 도면화에 대해 문의해 주세요.
+              사업 범위, 대상 주택, 제출 자료, 보안 기준은 상담 후 정리합니다.
+            </p>
+          </div>
+
+          <div class="contact-box">
+            <a href="tel:023134581">02-313-4581</a>
+            <a href="mailto:grenarch@naver.com">grenarch@naver.com</a>
+            <small>
+              ㈜여기건축사사무소<br />
+              YUGY DESIGN GROUP<br />
+              건축설계 · BIM · 노후주택 주택관리도면 · 공공형 Space Auditor
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-inner">
+          <div>
+            <strong>YUGY DESIGN GROUP</strong><br />
+            ㈜여기건축사사무소<br />
+            Copyright © 2026. All rights reserved.
+          </div>
+
+          <div class="footer-links">
+            <a href="https://yugy.org">yugy.org</a>
+            <a href="https://yugy.site" target="_blank" rel="noopener">도면소생술</a>
+            <a href="https://space-auditor.com" target="_blank" rel="noopener">Space Auditor</a>
+            <a href="https://yugy.cloud" target="_blank" rel="noopener">yugy.cloud</a>
+            <a href="mailto:grenarch@naver.com">문의하기</a>
+          </div>
+        </div>
+      </footer>
     </div>
-  </section>
+  </main>
 
-  <section class="section" id="sec-meta">
-    <div class="hero">
-      <div class="kicker">Future Experience</div>
-      <h1>METAVERSE</h1>
-      <p>
-        선택은 빠르게, 후회는 없게.<br>
-        완공될 공간을 미리 걸어보고, 가족 및 파트너와 의사결정을 공유하세요.
-      </p>
-    </div>
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener("click", function(event) {
+        const targetId = this.getAttribute("href");
+        if (!targetId || targetId === "#") return;
 
-    <div class="grid">
-      <div class="card">
-        <h3>Pre-Experience</h3>
-        <ul>
-          <li>시공 전 공간감, 동선, 채광 확인</li>
-          <li>가구 배치 및 인테리어 사전 시뮬레이션</li>
-          <li>VR/AR을 통한 몰입형 경험</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>적용 분야</h3>
-        <ul>
-          <li>사옥 및 근린생활시설 브랜딩</li>
-          <li>임대용 건물의 사전 마케팅</li>
-          <li>복지시설의 유니버설 디자인 검토</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>연결의 가치</h3>
-        <ul>
-          <li>BIM 데이터의 즉각적인 시각화</li>
-          <li>비대면 건축 협의 및 브리핑</li>
-          <li>디지털 트윈 기반의 유지관리</li>
-        </ul>
-      </div>
-    </div>
+        const target = document.querySelector(targetId);
+        if (!target) return;
 
-    <div class="actions">
-      <a class="btn primary" href="https://yugy.cloud" target="_blank">메타버스 체험하기 (yugy.cloud)</a>
-      <button class="btn youtube" id="yt-meta">▶ 소개 영상 보기</button>
-    </div>
-  </section>
-
-  <footer>
-    <div>
-      <strong>YUGY Design Group Architects</strong><br>
-      <span style="font-size:12px; opacity:0.7;">Copyright © 2026. All rights reserved.</span>
-    </div>
-    <div style="display:flex; gap:20px;">
-      <a href="https://yugy.cloud" target="_blank">Cloud</a>
-      <a href="https://yugy.site" target="_blank">Site</a>
-      <a href="https://yugy.store" target="_blank">Store</a>
-    </div>
-  </footer>
-</div>
-
-<div class="ytModal" id="ytModal" aria-hidden="true">
-  <div class="ytCard" role="dialog" aria-modal="true">
-    <div class="ytTop">
-      <div id="ytTitle">VIDEO PLAYER</div>
-      <button class="ytClose" id="ytClose">✕</button>
-    </div>
-    <div class="ytFrameWrap">
-      <iframe id="ytFrame" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-</div>
-
-<script>
-  // 영상 URL 설정
-  const YT_META  = "https://www.youtube.com/embed/FkGCGoUbkOM?si=f9ZZ6HxFNYMQgKXQ&rel=0";
-  const YT_GREEN = "https://www.youtube.com/embed/SLiBcJw9pOc?si=dhph7iSUf431zg7j&rel=0";
-  const YT_BIM   = "https://www.youtube.com/embed/ssahtH_k2Vc?si=BC-lfo8GRJfUs9Le&rel=0";
-
-  const modal = document.getElementById("ytModal");
-  const frame = document.getElementById("ytFrame");
-  const titleEl = document.getElementById("ytTitle");
-  const closeBtn = document.getElementById("ytClose");
-
-  function withAutoPlay(url){ return url + "&autoplay=1&mute=1&playsinline=1"; }
-
-  function openVideo(label, url){
-    titleEl.textContent = label;
-    frame.src = withAutoPlay(url);
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeVideo(){
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-    frame.src = "";
-    document.body.style.overflow = "";
-  }
-
-  function bindVideoButton(id, label, url){
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener("click", (e) => {
-      e.preventDefault();
-      openVideo(label, url);
+        event.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     });
-  }
-
-  bindVideoButton("yt-green", "Green Remodeling", YT_GREEN);
-  bindVideoButton("yt-bim",   "BIM Simulation", YT_BIM);
-  bindVideoButton("yt-meta",  "Metaverse Tour", YT_META);
-
-  closeBtn.addEventListener("click", closeVideo);
-  modal.addEventListener("click", (e) => { if (e.target === modal) closeVideo(); });
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeVideo(); });
-
-  // 탭 전환 로직
-  const tabs = document.querySelectorAll(".tab");
-  const sections = document.querySelectorAll(".section");
-
-  tabs.forEach(t => {
-    t.addEventListener("click", () => {
-      tabs.forEach(x => x.classList.remove("active"));
-      t.classList.add("active");
-
-      const id = t.dataset.target;
-      sections.forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
